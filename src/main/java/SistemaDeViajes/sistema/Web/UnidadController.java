@@ -21,7 +21,7 @@ public class UnidadController {
     private UnidadServices unidadServices;
 
     @GetMapping("/")
-    public String inicio(){
+    public String homepage(){
         return "index";
     }
 
