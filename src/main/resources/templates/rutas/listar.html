@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de Rutas</title>
+</head>
+<body>
+
+<header>
+    <h1>Listado de Rutas</h1>
+    <a th:href="@{/rutas/agregar}">Agregar Nueva Ruta</a>
+</header>
+
+<main>
+    <div th:if="${rutas != null and !rutas.empty}">
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Horario</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ruta : ${rutas}">
+                <td th:text="${ruta.idRuta}"></td>
+                <td th:text="${ruta.origen}"></td>
+                <td th:text="${ruta.destino}"></td>
+                <td th:text="${ruta.horario}"></td>
+                <td>
+                    <a th:href="@{'/rutas/editar/' + ${ruta.idRuta}}">Editar</a> |
+                    <a th:href="@{'/rutas/eliminar/' + ${ruta.idRuta}}"
+                       th:onclick="'return confirm(\'¿Estás seguro de eliminar esta ruta?\')'">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${rutas == null or rutas.empty}">
+        <p>No hay rutas registradas.</p>
+    </div>
+    <nav>
+        <a th:href="@{/}">Regresar al inicio</a>
+
+    </nav>
+
+</main>
+
+<footer>
+    <p>© 2025 Sistema de Viajes</p>
+</footer>
+
+</body>
+</html>

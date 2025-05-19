@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${ruta.idRuta != null} ? 'Editar Ruta' : 'Agregar Ruta'">Formulario Ruta</title>
+</head>
+<body>
+
+<h1 th:text="${ruta.idRuta != null} ? 'Editar Ruta' : 'Agregar Ruta'">Formulario Ruta</h1>
+
+<form th:action="@{/rutas/guardar}" th:object="${ruta}" method="post">
+  <!-- Campo oculto solo si estás editando -->
+  <input type="hidden" th:if="${ruta.idRuta != null}" th:field="*{idRuta}" />
+
+  <!-- Campo Origen -->
+  <div>
+    <label for="origen">Origen:</label>
+    <input type="text" id="origen" th:field="*{origen}" required />
+  </div>
+
+  <!-- Campo Destino -->
+  <div>
+    <label for="destino">Destino:</label>
+    <input type="text" id="destino" th:field="*{destino}" required />
+  </div>
+
+  <!-- Campo Horario -->
+  <div>
+    <label for="horario">Horario:</label>
+    <input type="text" id="horario" th:field="*{horario}" placeholder="Ej: 08:00 AM" required />
+  </div>
+
+  <!-- Botones -->
+  <div>
+    <button type="submit">Guardar</button>
+    <a th:href="@{/rutas/list}">Cancelar</a>
+  </div>
+</form>
+
+</body>
+</html>

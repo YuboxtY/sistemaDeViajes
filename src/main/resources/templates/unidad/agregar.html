@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${unidad.placa} != null ? 'Editar Unidad' : 'Agregar Unidad'">Formulario Unidad</title>
+</head>
+<body>
+<h1 th:text="${unidad.placa} != null ? 'Editar Unidad' : 'Agregar Unidad'">Formulario Unidad</h1>
+
+<form th:action="@{/unidades/guardar}" method="post" th:object="${unidad}">
+    <!-- Campo oculto para placa al editar -->
+    <input type="hidden" th:field="*{placa}" th:if="${unidad.placa} != null">
+
+    <!-- Mostrar campo placa solo al agregar -->
+    <div th:unless="${unidad.placa} != null">
+        <label for="placa">Placa:</label>
+        <input type="text" id="placa" th:field="*{placa}" required maxlength="10">
+    </div>
+
+    <!-- Campo Modelo -->
+    <div>
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="modelo" th:field="*{modelo}" required>
+    </div>
+
+    <!-- Campo Capacidad -->
+    <div>
+        <label for="capacidad">Capacidad:</label>
+        <input type="number" id="capacidad" th:field="*{capacidad}" required min="1">
+    </div>
+
+    <!-- Campo Estado -->
+    <div>
+        <label for="estado">Estado:</label>
+        <select id="estado" th:field="*{estado}" required>
+            <option th:each="estado : ${T(SistemaDeViajes.sistema.Domain.Unidad.estadoUnidad).values()}"
+                    th:value="${estado}"
+                    th:text="${estado}">
+            </option>
+        </select>
+    </div>
+
+
+    <!-- Botones -->
+    <div>
+        <button type="submit">Guardar</button>
+        <a th:href="@{/unidades/list}">Cancelar</a>
+    </div>
+</form>
+</body>
+</html>
