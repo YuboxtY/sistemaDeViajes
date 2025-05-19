@@ -39,7 +39,6 @@ public class UnidadServices implements SistemaDeViajes.sistema.Services.UnidadSe
     @Transactional (readOnly = true)
     public Unidad encontrarUnidad(Unidad unidad) {
         // Implementación del método para encontrar una unidad por su ID
-        unidadDao.findById(unidad.getPlaca()).orElse(null);
-        return null;
+       return unidadDao.findById(unidad.getPlaca()).orElse(null);
     }
 }

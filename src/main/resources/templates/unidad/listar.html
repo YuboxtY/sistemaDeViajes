@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Listado de Unidades</title>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <h1>Listado de Unidades</h1>
+    <a href="/unidades/agregar">Agregar Nueva Unidad</a>
+</header>
+
+<!-- Contenido Principal -->
+<main>
+    <!-- Lista de Unidades -->
+    <div th:if="${unidades != null and !unidades.empty}">
+        <table>
+            <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Modelo</th>
+                <th>Capacidad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="unidad : ${unidades}">
+                <td th:text="${unidad.placa}"></td>
+                <td th:text="${unidad.modelo}"></td>
+                <td th:text="${unidad.capacidad}"></td>
+                <td th:text="${unidad.estado}"></td>
+                <td>
+                    <a th:href="@{'/unidades/editar/' + ${unidad.placa}}">Editar</a>
+                    <a th:href="@{'/unidades/eliminar/' + ${unidad.placa}}"
+                       th:onclick="'return confirm(\'¿Está seguro de eliminar esta unidad?\');'">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mensaje si no hay unidades -->
+    <div th:if="${unidades == null or unidades.empty}">
+        <p>No hay unidades registradas</p>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <p>© 2025 Sistema de Unidades</p>
+</footer>
+</body>
+</html>
