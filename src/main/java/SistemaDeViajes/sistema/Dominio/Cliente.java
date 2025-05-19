@@ -14,7 +14,7 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1l; // Constante long
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idPersona;
+    private long idCliente;
     private String cedula;
     @NotEmpty
     private String nombre;
