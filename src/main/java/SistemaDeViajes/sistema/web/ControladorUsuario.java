@@ -1,44 +1,42 @@
 package SistemaDeViajes.sistema.web;
 
 import SistemaDeViajes.sistema.Dominio.Usuario;
-import SistemaDeViajes.sistema.services.UsuarioService;
+import SistemaDeViajes.sistema.dao.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Slf4j
-@RequestMapping("/usuario")
 public class ControladorUsuario {
+
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/") //mapeo de la raiz
-    public String inicio(Model model) { //metodo que se ejecutara cuando se haga una peticion
-        return "index"; //retorna la vista index
+    @GetMapping("/")
+    public String homepage() {
+        return "index";
     }
 
     @GetMapping("/agregarUsuario")
-    public String agregarUsuario(Usuario user) { //metodo que se ejecutara cuando se haga una peticion
-        return "/CrearUsuario";
+    public String agregarUsuario(Usuario user) {
+        return "Usuario/CrearUsuario";
     }
 
     @PostMapping("/guardarUsuario")
     public String guardar(Usuario user) {
         usuarioService.guardar(user);
-        return "redirect:/"; //redirecciona a la pagina principal
+        return "redirect:/";
     }
 
     @GetMapping("/editarUsuario/{idUsuario}")
     public String editar(Usuario user, Model model) {
         user = usuarioService.encontrarUsuario(user);
         model.addAttribute("Usuario", user);
-        return "/CrearUsuario";
+        return "Usuario/CrearUsuario";
     }
 
     @GetMapping("/eliminarUsuario")
@@ -47,13 +45,15 @@ public class ControladorUsuario {
         return "redirect:/";
     }
 
-    @GetMapping("/adminitrarRoles")
+    @GetMapping("/administrarRoles")
     public String Tabla(Model model) {
         var usuarios = usuarioService.listaUsuarios();
-        model.addAttribute( "usuarios", usuarios);
-        return "/AdminitrarRoles";
+        model.addAttribute("usuarios", usuarios);
+        return "Usuario/AdministrarRoles";
     }
-
-
 }
+
+
+
+
 

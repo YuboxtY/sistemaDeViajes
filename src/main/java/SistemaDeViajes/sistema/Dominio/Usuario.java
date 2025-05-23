@@ -25,7 +25,7 @@ public class Usuario implements Serializable {
     @Email
     private String email;
     private String password;
-    private String rol;
+
 
 
 }

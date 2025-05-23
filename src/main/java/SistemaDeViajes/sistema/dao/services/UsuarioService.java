@@ -1,7 +1,8 @@
-package SistemaDeViajes.sistema.services;
+package SistemaDeViajes.sistema.dao.services;
 
 import SistemaDeViajes.sistema.Dominio.Pago;
 import SistemaDeViajes.sistema.Dominio.Usuario;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

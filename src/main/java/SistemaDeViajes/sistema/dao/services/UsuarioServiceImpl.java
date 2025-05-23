@@ -1,0 +1,40 @@
+package SistemaDeViajes.sistema.dao.services;
+
+import SistemaDeViajes.sistema.Dominio.Usuario;
+import SistemaDeViajes.sistema.dao.UsuarioDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public  class UsuarioServiceImpl implements UsuarioService{
+    @Autowired //inyeccion de depdendencia para instanciar la clase
+    private UsuarioDao usuarioDao;
+    @Override
+    @Transactional(readOnly = true)//tranasaccion de lectura - no  afecta a la base de datos //comit guarda lo dle objeto a la base de datos//solo de lectura
+    public List<Usuario> listaUsuarios() {
+        return (List<Usuario>) usuarioDao.findAll();//encuentre de persona dao(capa de datos) todos los campos
+    }
+
+
+    @Override
+    @Transactional//anotacion que sirve para indicar que el metodo es una transaccion de escritura
+    // de la base de datos en la capa de servicio
+    public void guardar(Usuario persona) {
+        usuarioDao.save(persona);
+    }
+
+    @Override
+    @Transactional
+    public void eliminar(Usuario persona) {
+        usuarioDao.delete(persona);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Usuario encontrarUsuario(Usuario persona) {
+        return usuarioDao.findById(persona.getIdUsuario()).orElse(null);
+    }
+}
