@@ -1,26 +1,57 @@
 package SistemaDeViajes.sistema.web;
 
+import SistemaDeViajes.sistema.Dominio.Usuario;
 import SistemaDeViajes.sistema.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-@Controller //anotacion para indicar que esta clase es un controlador, un controlador es
-//una clase que se encarga de recibir las peticiones del cliente y devolver una respuesta
-//en este caso la respuesta sera una vista, en este caso una pagina html
-@Slf4j //anotacion para indicar que esta clase es un controlador y que se va a utilizar el logger, un
-//logger es una herramienta que nos permite registrar mensajes en un archivo de log y un archivo log es
-//un archivo que contiene un registro de los eventos que ocurren en una aplicacion de
+@Controller
+@Slf4j
 public class ControladorUsuario {
-    @Autowired  //anotacion que permite inyectar la dependencia de la clase UsuarioService,
-    //una dependencia es una clase que se necesita para que otra clase funcione, en este caso la clase UsuarioService
+    @Autowired
     private UsuarioService usuarioService;
 
-@GetMapping("/agregarUsuario") //anotacion que indica que este metodo se ejecutara cuando se haga una peticion
+    @GetMapping("/") //mapeo de la raiz
+    public String inicio(Model model) { //metodo que se ejecutara cuando se haga una peticion
+        return "index"; //retorna la vista index
+    }
 
-    public String agregarUsuario() { //metodo que se ejecutara cuando se haga una peticion
-        return "agregarUsuario"; //retorna la vista agregarUsuario.html
-    } //fin del metodo agregarUsuario
+    @GetMapping("/agregarUsuario")
+    public String agregarUsuario(Usuario user) { //metodo que se ejecutara cuando se haga una peticion
+        return "/CrearUsuario";
+    }
+
+    @PostMapping("/guardarUsuario")
+    public String guardar(Usuario user) {
+        usuarioService.guardar(user);
+        return "redirect:/"; //redirecciona a la pagina principal
+    }
+
+    @GetMapping("/editarUsuario/{idUsuario}")
+    public String editar(Usuario user, Model model) {
+        user = usuarioService.encontrarUsuario(user);
+        model.addAttribute("Usuario", user);
+        return "/CrearUsuario";
+    }
+
+    @GetMapping("/eliminarUsuario")
+    public String eliminar(Usuario user) {
+        usuarioService.eliminar(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/adminitrarRoles")
+    public String Tabla(Model model) {
+        var usuarios = usuarioService.listaUsuarios();
+        model.addAttribute( "usuarios", usuarios);
+        return "/AdminitrarRoles";
+    }
+
+
 }
 

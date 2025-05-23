@@ -11,5 +11,5 @@ public interface UsuarioService {
     public List<Usuario> listaUsuarios();
     public void guardar (Usuario user );
     public void eliminar (Usuario user);
-    public Usuario encontrarFBoleto(Usuario user);
+    public Usuario encontrarUsuario(Usuario user);
 }

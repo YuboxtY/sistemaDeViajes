@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Roles</title>
+</head>
+<body>
+
+<div th:if="${usuario != null and !usuario.empty}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Cedula</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usuario : ${usuarios}">
+            <td th:text="${usuario.cedula}"></td>
+            <td th:text="${usuario.nombre}"></td>
+            <td th:text="${persona.apellido}"></td>
+            <td th:text="${persona.email}"></td>
+            <td th:text="${persona.telefono}"></td>
+            <td>
+                <a th:href="@{/editarUsuario/} + ${usuario.idUsuario}">Editar</a>
+            </td>
+            <td>
+                <a th:href="@{/eliminarUsuario(idUsuario=${usuario.idUsuario})}">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${usuario == null or usuario.empty}">
+    La lista de usuarios está vacía.
+</div>
+</body>
+</html>

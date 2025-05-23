@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<form th:action="@{/guardarUsuario}" method="post" th:object="${usuario}">
+    <input type="hidden" name="idPersona" th:field="*{idUsuario}"/>
+</form>
 <head>
+    <title>Datos de la Persona</title>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
-
+<h1>Crear Cuenta</h1>
+<a th:href="@{/}">Regresar</a>
+<br/>
+<form th:action="@{/guardarUsuario}" method="post" th:object="${usuario}">
+    <br/>
+    <label for="cedula">Cedula</label>
+    <input type="text" id="cedula" name="cedula" th:field="*{cedula}"/>
+    <br/>
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" th:field="*{nombre}"/>
+    <br/>
+    <label for="apellido">Apellido</label>
+    <input type="text" id="apellido" name="apellido" th:field="*{apellido}"/>
+    <br/>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" th:field="*{email}"/>
+    <br/>
+    <label for="password">Teléfono</label>
+    <input type="text" id="password" name="password" th:field="*{password}"/>
+    <br/>
+    <input type="submit" name="guardar" value="Guardar"/>
+</form>
 </body>
 </html>
