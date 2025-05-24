@@ -24,9 +24,8 @@ public class Usuario implements Serializable {
     @NotEmpty
     @Email
     private String email;
-    private String telefono;
-    private String rol;
-    private String user;
     private String password;
+
+
 
 }

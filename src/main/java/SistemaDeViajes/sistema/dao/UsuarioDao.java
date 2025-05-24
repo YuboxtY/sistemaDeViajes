@@ -1,6 +1,5 @@
 package SistemaDeViajes.sistema.dao;
 
-
 import SistemaDeViajes.sistema.Dominio.Usuario;
 import org.springframework.data.repository.CrudRepository;
 
