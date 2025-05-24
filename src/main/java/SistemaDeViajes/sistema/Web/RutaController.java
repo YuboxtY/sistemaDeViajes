@@ -1,16 +1,19 @@
-package SistemaDeViajes.sistema.Web;
+package SistemaDeViajes.sistema.web;
 
 import SistemaDeViajes.sistema.Domain.Ruta;
 import SistemaDeViajes.sistema.Domain.RutaServices;
 
+import SistemaDeViajes.sistema.Domain.Unidad;
+import SistemaDeViajes.sistema.Domain.UnidadServices;
+import SistemaDeViajes.sistema.dao.RutaDao;
+import SistemaDeViajes.sistema.dao.UnidadDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -20,12 +23,24 @@ public class RutaController {
     @Autowired
     private RutaServices rutaServices; // Descomentar si tienes un servicio para manejar rutas
 
+    @Autowired
+    private UnidadServices unidadServices;
+    @Autowired
+    private RutaDao rutaDao;
+
+    @Autowired
+    private UnidadDao unidadDao;
+
     @GetMapping("/list")
     public String inicio(Model modelo) {
-        var rutas = rutaServices.listarRutas(); // Descomentar si tienes un método para listar rutas
+        var rutas = rutaServices.listarRutas();
         log.info("Ejecutando el controlador de rutas");
         modelo.addAttribute("rutas", rutas);
-        return "rutas/listar"; // Retorna la vista listar.html
+        modelo.addAttribute("unidadesDisponibles", unidadServices.listarUnidades()
+                .stream()
+                .filter(u -> u.getEstado() == Unidad.estadoUnidad.Disponible)
+                .toList());
+        return "rutas/listar";
     }
 
     // Crear nueva Ruta
@@ -53,9 +68,65 @@ public class RutaController {
     @GetMapping("/eliminar/{idRuta}") // Descomentar si tienes un ID para la ruta
     public String eliminarRuta(Ruta ruta) { // Descomentar si tienes una clase Ruta
         rutaServices.eliminar(ruta); // Descomentar si tienes un método para eliminar rutas
-        return "redirect:/rutas/list"; // Redirige a la lista de rutas después de eliminar
+    return "redirect:/rutas/list"; // Redirige a la lista de rutas después de eliminar
     }
 
 
+
+    // Asignar unidad a ruta
+    @PostMapping("/asignar-unidad")
+    public String asignarUnidad(
+            @RequestParam Long idRuta,
+            @RequestParam String placaUnidad,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            rutaServices.asignarUnidadARuta(idRuta, placaUnidad);
+            redirectAttributes.addFlashAttribute("success", "Unidad asignada correctamente");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al asignar unidad: " + e.getMessage());
+        }
+
+        return "redirect:/rutas/list";
+    }
+
+
+    @PostMapping("/liberar-unidad/{idRuta}")
+    public String liberarUnidad(
+            @PathVariable Long idRuta,
+            @RequestParam String placaUnidad,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            // Obtener la ruta con sus unidades
+            Ruta ruta = rutaDao.findById(idRuta)
+                    .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
+
+            // Buscar la unidad específica
+            Unidad unidad = ruta.getUnidades().stream()
+                    .filter(u -> u.getPlaca().equals(placaUnidad))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Unidad no encontrada en esta ruta"));
+
+            // Liberar la unidad (eliminar relación bidireccional)
+            ruta.getUnidades().remove(unidad);
+            unidad.getRutas().remove(ruta);
+
+            // Actualizar estado de la unidad si estaba asignada
+            if (unidad.getEstado() == Unidad.estadoUnidad.Asignada) {
+                unidad.setEstado(Unidad.estadoUnidad.Disponible);
+            }
+
+            // Guardar cambios (JPA actualiza automáticamente la tabla intermedia)
+            rutaDao.save(ruta);
+            unidadDao.save(unidad);
+
+            redirectAttributes.addFlashAttribute("success", "Unidad liberada correctamente");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al liberar unidad: " + e.getMessage());
+        }
+
+        return "redirect:/rutas/list";
+    }
 
 }

@@ -1,6 +1,7 @@
 package SistemaDeViajes.sistema.Domain;
 
-import SistemaDeViajes.sistema.Dao.UnidadDao;
+
+import SistemaDeViajes.sistema.dao.UnidadDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ public class UnidadServices implements SistemaDeViajes.sistema.Services.UnidadSe
     private UnidadDao unidadDao;
 
     @Override
-    @Transactional (readOnly = true) // Indica que este método es de solo lectura
+    @Transactional(readOnly = true) // Indica que este método es de solo lectura
     public List<Unidad> listarUnidades() {
         // Implementación del método para listar todas las unidades
         return (List<Unidad>) unidadDao.findAll(); // Devuelve una lista de todas las unidades
@@ -36,9 +37,19 @@ public class UnidadServices implements SistemaDeViajes.sistema.Services.UnidadSe
     }
 
     @Override
-    @Transactional (readOnly = true)
+    @Transactional(readOnly = true)
     public Unidad encontrarUnidad(Unidad unidad) {
         // Implementación del método para encontrar una unidad por su ID
-       return unidadDao.findById(unidad.getPlaca()).orElse(null);
+        return unidadDao.findById(unidad.getPlaca()).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Unidad> listarUnidadesDisponibles() {
+        return unidadDao.findByEstado(Unidad.estadoUnidad.Disponible);
+    }
+
+    @Transactional
+    public void actualizarUnidad(Unidad unidad) {
+        unidadDao.save(unidad);
     }
 }

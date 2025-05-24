@@ -5,43 +5,31 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
-@Table (name = "rutas")
+@Table(name = "rutas")
 public class Ruta implements Serializable {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "id_ruta")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ruta")
     private Long idRuta;
+
 
     private String origen;
     private String destino;
     private String horario;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinTable(
+            name = "ruta_unidad",
+            joinColumns = @JoinColumn(name = "ruta_id"),
+            inverseJoinColumns = @JoinColumn(name = "unidad_id")
+    )
+    private List<Unidad> unidades; // Relación con la entidad Unidad
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    //private String fechaSalida;
-   // private String fechaLlegada;
-   // private String horaSalida;
-   // private String horaLlegada;
-  //  private String precio;
-   // private String duracion;
-   // private String tipoViaje;
-
-    // Constructor, getters y setters
 
 }
