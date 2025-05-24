@@ -35,7 +35,7 @@ public class ControladorUsuario {
     @GetMapping("/editarUsuario/{idUsuario}")
     public String editar(Usuario user, Model model) {
         user = usuarioService.encontrarUsuario(user);
-        model.addAttribute("Usuario", user);
+        model.addAttribute("usuario", user);
         return "Usuario/CrearUsuario";
     }
 
