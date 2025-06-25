@@ -28,6 +28,7 @@ public class ControladorUsuario {
 
     @PostMapping("/guardarUsuario")
     public String guardar(Usuario user) {
+        usuarioService.encriptarPassword(user.getPassword());
         usuarioService.guardar(user);
         return "redirect:/";
     }
@@ -48,6 +49,7 @@ public class ControladorUsuario {
     @GetMapping("/administrarRoles")
     public String Tabla(Model model) {
         var usuarios = usuarioService.listaUsuarios();
+
         model.addAttribute("usuarios", usuarios);
         return "Usuario/AdministrarRoles";
     }

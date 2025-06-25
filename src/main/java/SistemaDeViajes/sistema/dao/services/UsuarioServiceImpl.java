@@ -3,6 +3,7 @@ package SistemaDeViajes.sistema.dao.services;
 import SistemaDeViajes.sistema.Dominio.Usuario;
 import SistemaDeViajes.sistema.dao.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,5 +37,14 @@ public  class UsuarioServiceImpl implements UsuarioService{
     @Transactional(readOnly = true)
     public Usuario encontrarUsuario(Usuario persona) {
         return usuarioDao.findById(persona.getIdUsuario()).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String encriptarPassword(String password) {
+        // Crear una instancia de BCryptPasswordEncoder
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        return passwordEncoder.encode(password); // Encriptar la contraseña
     }
 }

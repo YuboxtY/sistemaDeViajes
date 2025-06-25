@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 
@@ -26,6 +27,11 @@ public class Usuario implements Serializable {
     private String email;
     private String password;
 
+    @OneToMany
+    @JoinColumn(name = "idRol", referencedColumnName = "idRol")
+    private Rol rol; // Relación con la entidad Rol, asumiendo que existe una clase Rol definida en el mismo paquete.
+
 
 
 }
+
