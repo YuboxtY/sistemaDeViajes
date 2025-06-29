@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+
+    <meta charset="UTF-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!--- Meta para la vista responsive -->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+
+          crossorigin="anonymous"> <!--- Enlace a Bootstrap CSS --->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+
+          crossorigin="anonymous" referrerpolicy="no-referrer"/> <!--- Enlace a Font Awesome para iconos --->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+
+            crossorigin="anonymous"></script> <!--- Enlace a Bootstrap JS --->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- CSS personalizado -->
+    <style>
+        .navbar {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+
+</head>
+<body>
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary p-0">
+        <div class="container">
+            <a th:href="@{/}" class="navbar-brand" th:text="#{plantilla.titulo}">Empresa de Trasporte Quezada
+                Aguirre</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-bus-front"></i> <!-- Ícono de bus -->
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse"><!--- Menú de navegación colapsable --->
+            <ul class="navbar-nav"><!--- Lista de elementos del menú de navegación --->
+                <li class="nav-item px-2">
+                    <a th:href="@{/}" class="nav-link active" th:text="#{barra.titulo}">Inicio</a>
+                </li>
+            </ul>
+
+            <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
+                <!--- Lista de elementos del menú de navegación para usuarios autenticados --->
+                <li class="nav-item mr-3">
+                    <a class="nav-link"> <!--- Enlace de bienvenida al usuario autenticado --->
+                        <i class="fas fa-user"></i> <!--- Icono de usuario --->
+                        <span th:text="#{barra.bienvenido}">Bienvenido</span>
+                        <span sec:authentication="name">Usuario</span>
+                    </a>
+                </li>
+                <li class="nav-item"> <!--- Botón de cierre de sesión --->
+                    <form th:action="@{/logout}" method="post"> <!--- Formulario para cerrar sesión --->
+                        <button type="submit" class="nav-link btn btn-link"
+                                style="color: white; text-decoration: none;">
+                            <i class="fas fa-user-times"></i> [[#{barra.salir}]]
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+</header>
+
+<footer th:fragment="footer" class="bg-light text-black mt-3 p-3"> <!--- Pie de página de la plantilla --->
+    <div class="container">
+        <div class="col"> <!--- Columna para el contenido del pie de página --->
+            <p class="lead text-center"> <!--- Texto del pie de página --->
+                <a th:href="@{/(lang=es)}">ES</a> | <!--- Enlace para cambiar el idioma a español --->
+                <a th:href="@{/(lang=en)}">EN</a> <!
+                <span>[[#{plantilla.pie-pagina}]]
+                    <a href="http://ucacue.edu.ec" target="_blank"> ucauce.edu.ec</a>
+                </span> <!--- Enlace al sitio web de la universidad --->
+            </p>
+        </div>
+
+    </div>
+</footer>
+</body>
+</html>

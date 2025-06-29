@@ -21,6 +21,11 @@ public class ControladorUsuario {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";  // Nombre de la plantilla SIN extensión
+    }
+
     @GetMapping("/agregarUsuario")
     public String agregarUsuario(Usuario user) {
         return "Usuario/CrearUsuario";

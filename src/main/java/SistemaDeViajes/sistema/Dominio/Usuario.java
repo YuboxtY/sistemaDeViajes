@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Data
@@ -28,8 +29,8 @@ public class Usuario implements Serializable {
     private String password;
 
     @OneToMany
-    @JoinColumn(name = "idRol", referencedColumnName = "idRol")
-    private Rol rol; // Relación con la entidad Rol, asumiendo que existe una clase Rol definida en el mismo paquete.
+    @JoinColumn(name = "id_usuario") // Nombre de la columna que se va a relacionar
+    private List<Rol> rol; // Relación con la entidad Rol, asumiendo que existe una clase Rol definida en el mismo paquete.
 
 
 
