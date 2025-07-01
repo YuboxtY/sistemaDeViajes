@@ -1,4 +1,4 @@
-package SistemaDeViajes.sistema.web;
+package SistemaDeViajes.sistema.Web;
 
 import SistemaDeViajes.sistema.Domain.Ruta;
 import SistemaDeViajes.sistema.Domain.RutaServices;
