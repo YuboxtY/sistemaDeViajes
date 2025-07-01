@@ -1,7 +1,7 @@
 package SistemaDeViajes.sistema.Domain;
 
 
-import SistemaDeViajes.sistema.dao.UnidadDao;
+import SistemaDeViajes.sistema.Dao.UnidadDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
