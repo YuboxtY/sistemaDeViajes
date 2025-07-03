@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" lang="es">
 <head th:replace="layout/plantilla :: head">
     <title>Login</title>
     <meta charset="UTF-8"/>
@@ -36,13 +36,14 @@
         </div>
     </div>
 </section>
+<section th:replace="~{Usuario/BotonCrearUsuario :: botonesCrearCuenta}"></section>
 <section id="login">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header text-center py-3">
-                        <h4 class="mb-0">Ingresar al Sistema</h4>
+                        <h4 class="mb-0">[[#{accion.ingresar}]]</h4>
                     </div>
                     <div class="card-body p-4">
                         <form method="POST" th:action="@{/login}">
