@@ -5,20 +5,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Botones Agregar</title>
+    <title>Botones Crear Usuario</title>
 </head>
 <body>
-<section th:fragment="botonesCrearCuenta" class="py-4"> <!-- Botones para agregar cliente -->
-    <div class="container"><!-- Contenedor principal de la sección -->
-        <div class="row"><!-- Fila para los botones -->
-            <div class="col-md-6 text"> <!-- Columna para el botón de agregar cliente -->
-                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarUsuario">
-                    <i class="fas fa-plus"></i> [[#{accion.crearCuenta}]]<!-- Icono y texto del botón -->
-                </a>
-            </div>
-        </div>
-    </div>
-
-</section>
+<header th:replace="layout/plantilla :: header"></header><!-- Encabezado de la página -->
+<section th:replace="Usuario/CrearUsuario :: CrearUsuario"></section><!-- Sección para editar los datos de la persona -->
+<footer th:replace="layout/plantilla :: footer"></footer>
 </body>
 </html>

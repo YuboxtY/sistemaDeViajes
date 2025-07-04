@@ -1,113 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Cuenta</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 40px;
-        }
-
-        h1 {
-            font-size: 32px;
-            border-bottom: 2px solid #000;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-
-        form {
-            width: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"] {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        label {
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-container input {
-            margin-right: 10px;
-        }
-
-        button {
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .volver {
-            margin-bottom: 20px;
-        }
-
-    </style>
 </head>
 <body>
+<section th:fragment="CrearUsuario">
+    <form th:action="@{/guardarUsuario}" th:object="${usuario}" method="POST" class="was-validated">
+        <input type="hidden" th:field="*{idUsuario}" />
 
-<h1>Crear Cuenta</h1>
-<div class="volver">
-    <a th:href="@{/}">Regresar</a>
-</div>
+        <section th:replace="Usuario/FormularioCrear :: FormularioCrear"></section>
 
-<form th:action="@{/guardarUsuario}" method="post" th:object="${usuario}">
-    <input type="hidden" th:field="*{idUsuario}"/>
-
-    <label for="cedula">Cédula/RUC</label>
-    <input type="text" id="cedula" th:field="*{cedula}" required />
-
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" th:field="*{nombre}" required />
-
-    <label for="apellido">Apellido</label>
-    <input type="text" id="apellido" th:field="*{apellido}" required />
-
-    <label for="email">Correo Electrónico</label>
-    <input type="email" id="email" th:field="*{email}" required />
-
-    <label for="password">Contraseña</label>
-    <input type="password" id="password" th:field="*{password}" required />
-
-    <label for="confirmPassword">Confirmar Contraseña</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" required />
-
-    <div class="checkbox-container">
-        <input type="checkbox" id="terms" required>
-        <label for="terms">Aceptar los Términos y Condiciones</label>
-    </div>
-
-    <button type="submit">CREAR CUENTA</button>
-</form>
-
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+        </div>
+    </form>
+</section>
 </body>
 </html>

@@ -36,7 +36,16 @@
         </div>
     </div>
 </section>
-<section th:replace="~{Usuario/BotonCrearUsuario :: botonesCrearCuenta}"></section>
+
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-end">
+        <a th:href="@{/crearCuenta}" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Agregar Cuenta
+        </a>
+    </div>
+</div>
+
 <section id="login">
     <div class="container">
         <div class="row justify-content-center">
