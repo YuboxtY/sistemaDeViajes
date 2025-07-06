@@ -28,11 +28,9 @@ public class Usuario implements Serializable {
     private String email;
     private String password;
 
-    @OneToMany
-    @JoinColumn(name = "id_usuario") // Nombre de la columna que se va a relacionar
-    private List<Rol> rol; // Relación con la entidad Rol, asumiendo que existe una clase Rol definida en el mismo paquete.
-
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_rol") // columna en la tabla usuario que apunta al rol
+    private Rol rol;
 
 }
 

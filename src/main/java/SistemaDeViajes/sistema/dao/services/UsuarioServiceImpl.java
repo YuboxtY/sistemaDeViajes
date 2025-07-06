@@ -57,16 +57,21 @@ public  class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
 
-    @Transactional(readOnly = true) //anotacion que sirve para indicar que el metodo es de solo lectura
+    @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioDao.findByCedula(username);
         if (usuario == null) {
             throw new UsernameNotFoundException(username);
         }
+
         var roles = new ArrayList<GrantedAuthority>();
-        for (Rol rol : usuario.getRol()) {
+        Rol rol = usuario.getRol();
+        if (rol != null) {
             roles.add(new SimpleGrantedAuthority(rol.getNombre()));
         }
+
         return new User(usuario.getCedula(), usuario.getPassword(), roles);
-    } //fin del metodo loadUserByUsername
+    }
+//fin del metodo loadUserByUsername
 }
