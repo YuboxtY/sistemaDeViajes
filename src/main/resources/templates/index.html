@@ -1,16 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Viajes Trans-Nabon</title>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="layout/plantilla :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Viajes Trans-Nabon</title>
+    <!-- Carga Bootstrap y Bootstrap Icons en tu <head> si aún no lo tienes -->
+
 </head>
 <body>
-<h1>Bienvenido al Sistema de Viajes Trans-Nabon</h1>
-
-<nav>
-  <a th:href="@{/crearCuenta}">Crear Usuario</a><br>
-  <a th:href="@{/administrarRoles}">Gestionar Roles</a><br>
-</nav>
+<header th:replace="layout/plantilla :: header"></header>
+<section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <h1>Bienvenido al Sistema de Viajes Trans-Nabon</h1>
+        </div>
+    </div>
+</section>
+<main class="main-container pt-4">
+    <div class="container options-container">
+        <div class="row justify-content-center">
+            <div class="col-md-4" sec:authorize="hasRole('ROLE_ADMIN')">
+                <div class="option-card users-card">
+                    <i class="bi bi-person-lines-fill"></i>
+                    <h3 class="card-title mt-3">Crear Cuenta del Personal</h3>
+                    <p class="card-text">Registrar nuevos usuarios del Personal</p>
+                    <a href="/crearPersonal" class="btn btn-orange mt-2">
+                        <i class="bi bi-shield-lock me-2"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/administrarRoles}">Gestionar Roles</a><br>
+<footer th:replace="layout/plantilla::footer"></footer>
 </body>
 </html>
