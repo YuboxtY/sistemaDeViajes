@@ -17,17 +17,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
-@RequestMapping("/rutas") // Puedes descomentar esta línea si deseas mapear la ruta base para este controlador
+@RequestMapping("/rutas")
 public class RutaController {
 
+    // Inyección de dependencias para los servicios y DAOs
     @Autowired
-    private RutaServices rutaServices; // Descomentar si tienes un servicio para manejar rutas
-
+    private RutaServices rutaServices;
     @Autowired
     private UnidadServices unidadServices;
+
     @Autowired
     private RutaDao rutaDao;
-
     @Autowired
     private UnidadDao unidadDao;
 
