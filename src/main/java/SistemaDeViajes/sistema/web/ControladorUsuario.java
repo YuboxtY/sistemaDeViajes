@@ -59,6 +59,31 @@ public class ControladorUsuario {
         return "redirect:/login";
     }
 
+    @GetMapping("/crearPersonal")
+    public String mostrarFormuPersonal(Model model) {
+        model.addAttribute("usuario", new Usuario()); // o Persona, según tu clase
+        model.addAttribute("roles", rolRepository.findAll()); // Cargar todos los roles
+        return "Usuario/BotonCrearPersonal"; // la ruta al archivo HTML
+    }
+
+    @PostMapping("/guardarPersonal")
+    public String guardarPersonal(@ModelAttribute("usuario") Usuario user,
+                                  Model model) {
+        // Verificar si el rol está presente en el objeto usuario
+        if (user.getRol() == null) {
+            model.addAttribute("error", "El rol es obligatorio.");
+            return "Usuario/BotonCrearPersonal"; // Redirigir al formulario con un mensaje de error
+        }
+        // Suponiendo que el rol se envía como un ID (Long)
+        Long rolId = user.getRol().getIdRol(); // Obtener el ID del rol desde el objeto Rol
+        Optional<Rol> rolUsuario = rolRepository.findById(rolId);
+        Rol rol = rolUsuario.orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+        user.setRol(rol); // Establecer el objeto Rol en el usuario
+        user.setPassword(usuarioService.encriptarPassword(user.getPassword())); // ¡Muy importante!
+        usuarioService.guardar(user);
+        return "redirect:/login";
+    }
+
 
     @GetMapping("/editarUsuario/{idUsuario}")
     public String editar(Usuario user, Model model) {

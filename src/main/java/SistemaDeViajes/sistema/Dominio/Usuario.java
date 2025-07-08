@@ -32,5 +32,7 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "id_rol") // columna en la tabla usuario que apunta al rol
     private Rol rol;
 
+
+
 }
 
