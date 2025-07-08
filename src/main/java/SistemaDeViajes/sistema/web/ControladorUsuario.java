@@ -60,11 +60,11 @@ public class ControladorUsuario {
     }
 
     @GetMapping("/crearPersonal")
-    public String mostrarFormuPersonal(Model model) {
-        model.addAttribute("usuario", new Usuario()); // o Persona, según tu clase
-        model.addAttribute("roles", rolRepository.findAll()); // Cargar todos los roles
-        return "Usuario/BotonCrearPersonal"; // la ruta al archivo HTML
+    public String crearPersonal(Model model) {
+        model.addAttribute("usuario", new Usuario()); // Asegúrate de que el objeto Usuario esté disponible
+        return "Usuario/BotonCrearPersonal"; // Asegúrate de que la ruta sea correcta
     }
+
 
     @PostMapping("/guardarPersonal")
     public String guardarPersonal(@ModelAttribute("usuario") Usuario user,
@@ -79,9 +79,9 @@ public class ControladorUsuario {
         Optional<Rol> rolUsuario = rolRepository.findById(rolId);
         Rol rol = rolUsuario.orElseThrow(() -> new RuntimeException("Rol no encontrado"));
         user.setRol(rol); // Establecer el objeto Rol en el usuario
-        user.setPassword(usuarioService.encriptarPassword(user.getPassword())); // ¡Muy importante!
+        user.setPassword(usuarioService.encriptarPassword(user.getCedula())); // ¡Muy importante!
         usuarioService.guardar(user);
-        return "redirect:/login";
+        return "redirect:/index";
     }
 
 
