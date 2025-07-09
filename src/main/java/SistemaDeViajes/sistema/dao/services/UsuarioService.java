@@ -13,4 +13,5 @@ public interface UsuarioService {
     public void guardar (Usuario user );
     public void eliminar (Usuario user);
     public Usuario encontrarUsuario(Usuario user);
+    public String encriptarPassword(String pasword);
 }

@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 @Data
@@ -26,6 +28,11 @@ public class Usuario implements Serializable {
     private String email;
     private String password;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_rol") // columna en la tabla usuario que apunta al rol
+    private Rol rol;
+
 
 
 }
+
