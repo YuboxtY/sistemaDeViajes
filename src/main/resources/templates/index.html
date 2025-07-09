@@ -104,7 +104,11 @@
     </div>
 </main>
 
-<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/administrarRoles}">Gestionar Roles</a><br>
+<div class="text-center mt-4" sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/administrarRoles}" class="btn btn-outline-dark">
+        <i class="bi bi-shield-lock-fill me-2"></i> Gestionar Roles
+    </a>
+</div>
 
 <footer th:replace="layout/plantilla::footer"></footer>
 
