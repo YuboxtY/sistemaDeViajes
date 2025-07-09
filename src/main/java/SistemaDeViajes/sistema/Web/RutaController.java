@@ -35,7 +35,7 @@ public class RutaController {
     public String inicio(Model modelo) {
         var rutas = rutaServices.listarRutas();
         log.info("Ejecutando el controlador de rutas");
-        modelo.addAttribute("rutas", rutas);
+        modelo.addAttribute("rutas", rutas); //
         modelo.addAttribute("unidadesDisponibles", unidadServices.listarUnidades()
                 .stream()
                 .filter(u -> u.getEstado() == Unidad.estadoUnidad.Disponible)

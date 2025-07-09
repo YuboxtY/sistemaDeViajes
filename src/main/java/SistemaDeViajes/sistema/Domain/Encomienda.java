@@ -1,34 +1,56 @@
-//package SistemaDeViajes.sistema.Domain;
-//
-//import jakarta.persistence.*;
-//import lombok.Data;
-//
-//import java.io.Serializable;
-//
-//
-//@Data
-//@Entity
-//@Table ( name = "encomiendas" ) // Nombre de la tabla en la base de datos
-//public class Encomienda implements Serializable {
-//
-//    @Id
-//    @GeneratedValue (strategy = GenerationType.IDENTITY)
-//    @Column( name = "id_encomienda")
-//    private String idEncomienda;
-//
-//    @Column ( name = "numero_de_envio", unique = true) // Número de envío único
-//    private String numeroDeEnvio;
-//
-//    private String remitente; // Remitente de la encomienda
-//    private String destinatario; // Destinatario de la encomienda
-//
-//    @Column ( name = "fecha_envio")
-//    private String fechaEnvio; // Fecha de envío
-//    private String tipo; // Tipo de encomienda (documento, paquete, etc.)
-//    private String estado; // Estado de la encomienda (en tránsito, entregada, etc.)
-//    private String precio; // Precio del envío
-//
-//
-//
-//}
+package SistemaDeViajes.sistema.Domain;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Data
+@Entity
+@Table(name = "encomiendas")
+public class Encomienda implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_encomienda")
+    private Long idEncomienda;
+
+    @Column(name = "numero_de_envio", unique = true)
+    private String numeroDeEnvio;
+
+    // === Datos del Cliente ===
+//    @ManyToOne
+//    @JoinColumn(name = "remitente_id")
+//    private Cliente remitente;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "destinatario_id")
+//    private Cliente destinatario;
+
+    // === Información del Envío ===
+    @Column(name = "fecha_envio")
+    private LocalDateTime fechaEnvio;
+
+    private String tipo;
+    private String descripcion;
+
+    // === Cálculo y Facturación ===
+    private BigDecimal precioBase;
+    private BigDecimal total;
+
+    private EstadoEncomienda estado;
+
+    public enum EstadoEncomienda {
+        Pendiente,
+        Enviado,
+        Entregado,
+        Cancelado
+    }
+
+    @Column(name = "fecha_factura")
+    private LocalDateTime fechaFactura;
+
+    private boolean pagado;
+}
