@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Boton Crear Personal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+
+</head>
+<body>
+<header th:replace="layout/plantilla :: header"></header><!-- Encabezado de la página -->
+<section th:replace="Usuario/CrearPersonal :: CrearPersonal"></section><!-- Sección para editar los datos de la persona -->
+<footer th:replace="layout/plantilla :: footer"></footer>
+</body>
+</html>
