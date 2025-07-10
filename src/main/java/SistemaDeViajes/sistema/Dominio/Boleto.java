@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -14,13 +15,19 @@ public class Boleto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idBoleto;
-    private String Descripcion;
-    private String cedula;
-    private String nombres;
-    private String apellidos;
-    private String ruta;
-    private String fecha;
-    private String horario;
-    private String asiento;
-    private String tarifa;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUsuario")
+    private Usuario usuario; // Usuario que compra el boleto
+    //@ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "idAsiento")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idTurno")
+    private Turno turno; // Turno del viaje para el cual se compra el boleto
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idAsiento")
+    private List<Asiento> asientos; // Lista de asientos reservados en el boleto
+
 }
