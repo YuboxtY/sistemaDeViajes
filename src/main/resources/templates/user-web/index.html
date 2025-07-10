@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      th:with="page='index'"
+      th:replace="layout/user-layout :: layout(~{::content})">
+<div th:fragment="content">
+
+    <!-- HERO con imagen de fondo e overlay para contraste -->
+    <header
+            class="position-relative overflow-hidden rounded-3 mb-5"
+            style="
+        background-image: url('/images/fondo1.png');
+        background-size: cover;
+        background-position: center;
+        height: 600px;
+      ">
+        <!-- Capa semitransparente -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
+        <!-- Texto centrado -->
+        <div class="position-absolute top-50 start-50 translate-middle text-center text-white px-3">
+            <h1 class="display-5 fw-bold">Bienvenido a Trans-Nabón</h1>
+            <p class="lead">Todo tu transporte y envío de encomiendas en un mismo lugar</p>
+            <a class="btn btn-light btn-lg shadow" th:href="@{/user-web/viajes}">
+                🚍 Reservar Viaje
+            </a>
+            <!-- Texto pequeño debajo del botón -->
+            <p class="small mt-2 text-white-70">Elige tu ruta, fecha y asientos</p>
+        </div>
+
+    </header>
+
+    <!-- TARJETAS DE SERVICIOS -->
+    <section class="row g-4 text-center justify-content-center">
+        <!-- Historial de Viajes -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-clock-history fs-1 text-success"></i>
+                    <h5 class="card-title mt-3">Historial de Viajes</h5>
+                    <p class="card-text">Revisa tus viajes pasados.</p>
+                    <a class="btn btn-success w-100" th:href="@{/user-web/historial}">Ver Historial</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seguimiento Encomiendas -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-box fs-1 text-warning"></i>
+                    <h5 class="card-title mt-3">Historial de Encomiendas</h5>
+                    <p class="card-text">Revisa tus encomiendas enviadas.</p>
+                    <a class="btn btn-warning w-100" th:href="@{/user-web/encomiendas}">Ver Historial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</html>
