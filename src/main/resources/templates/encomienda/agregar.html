@@ -8,71 +8,134 @@
 <body class="bg-light">
 
 <div class="container py-5">
-    <header class="mb-4">
+    <header class="mb-5 text-center">
         <h2 class="text-primary">Formulario de Encomienda</h2>
     </header>
 
-    <form th:action="@{/encomiendas/guardar}" method="get" th:object="${encomienda}" class="card shadow-sm p-4 bg-white">
-
-        <!-- ID oculto -->
-        <input type="hidden" th:field="*{idEncomienda}"/>
-
-        <div class="mb-3">
+    <form th:action="@{/encomiendas/guardar}" th:object="${encomienda}" method="post">
+        <!-- ID y Número de Envío -->
+        <input type="hidden" th:field="*{idEncomienda}" />
+        <div class="mb-4">
             <label class="form-label">Número de Envío</label>
-            <input type="text" th:field="*{numeroDeEnvio}" class="form-control" required/>
+            <input type="text" th:field="*{numeroDeEnvio}" class="form-control" readonly />
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Remitente</label>
-            <input type="text" th:field="*{remitente.nombre}" class="form-control" placeholder="Nombre del remitente" required/>
+        <!-- Bloque Remitente y Destinatario lado a lado -->
+        <div class="row g-4">
+            <!-- Remitente -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Remitente</div>
+                    <div class="card-body">
+                        <input type="hidden" th:field="*{remitente.idCliente}" />
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="remitenteCedula" class="form-label">Cédula</label>
+                                <input type="text" id="remitenteCedula" th:field="*{remitente.cedula}" class="form-control" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="remitenteNombre" class="form-label">Nombres</label>
+                                <input type="text" id="remitenteNombre" th:field="*{remitente.nombre}" class="form-control" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="remitenteApellido" class="form-label">Apellidos</label>
+                                <input type="text" id="remitenteApellido" th:field="*{remitente.apellido}" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Destinatario -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Destinatario</div>
+                    <div class="card-body">
+                        <input type="hidden" th:field="*{destinatario.idCliente}" />
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="destinatarioCedula" class="form-label">Cédula</label>
+                                <input type="text" id="destinatarioCedula" th:field="*{destinatario.cedula}" class="form-control" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="destinatarioNombre" class="form-label">Nombres</label>
+                                <input type="text" id="destinatarioNombre" th:field="*{destinatario.nombre}" class="form-control" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="destinatarioApellido" class="form-label">Apellidos</label>
+                                <input type="text" id="destinatarioApellido" th:field="*{destinatario.apellido}" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Destinatario</label>
-            <input type="text" th:field="*{destinatario.nombre}" class="form-control" placeholder="Nombre del destinatario" required/>
+        <!-- Información de Envío -->
+        <div class="card mb-4">
+            <div class="card-header">Información de Envío</div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="fechaEnvio" class="form-label">Fecha de Envío</label>
+                        <input type="datetime-local" id="fechaEnvio" th:field="*{fechaEnvio}" class="form-control" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="tipoEnvio" class="form-label">Tipo de Envío</label>
+                        <input type="text" id="tipoEnvio" th:field="*{tipo}" class="form-control" placeholder="Ej: Paquete" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="estadoEnvio" class="form-label">Estado</label>
+                        <select id="estadoEnvio" th:field="*{estado}" class="form-select" required>
+                            <option th:each="e : ${T(SistemaDeViajes.sistema.Domain.Encomienda.EstadoEncomienda).values()}"
+                                    th:value="${e}" th:text="${e}"></option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="descripcionEnvio" class="form-label">Descripción</label>
+                        <textarea id="descripcionEnvio" th:field="*{descripcion}" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Fecha de Envío</label>
-            <input type="datetime-local" th:field="*{fechaEnvio}" class="form-control" required/>
+        <!-- Pago y Facturación -->
+        <div class="card mb-4">
+            <div class="card-header">Pago y Facturación</div>
+            <div class="card-body">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label for="metodoPago" class="form-label">Método de Pago</label>
+                        <select id="metodoPago" th:field="*{metodoPago}" class="form-select" required>
+                            <option th:each="m : ${T(SistemaDeViajes.sistema.Domain.Encomienda.MetodoPago).values()}"
+                                    th:value="${m}" th:text="${m}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="precioSubtotal" class="form-label">Precio Subtotal</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" step="0.01" id="precioSubtotal" th:field="*{precioSubtotal}" class="form-control" required />
+                        </div>
+                    </div>
+                    <!-- Plain text para IVA y Total -->
+                    <div class="col-md-2">
+                        <label class="form-label">IVA (12%)</label>
+                        <p class="form-control-plaintext" th:text="${encomienda.iva}"></p>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Total</label>
+                        <p class="form-control-plaintext" th:text="${encomienda.total}"></p>
+                    </div>
+                </div>
+                <div class="form-check mt-3">
+                    <input class="form-check-input" type="checkbox" id="pagado" th:field="*{pagado}" />
+                    <label class="form-check-label" for="pagado">Pagado</label>
+                </div>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Tipo</label>
-            <input type="text" th:field="*{tipo}" class="form-control" placeholder="Ej: Paquete, Sobre, Caja" required/>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea th:field="*{descripcion}" class="form-control" rows="2"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Precio Base</label>
-            <input type="number" step="0.01" th:field="*{precioBase}" class="form-control" required/>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Total</label>
-            <input type="number" step="0.01" th:field="*{total}" class="form-control" required/>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Estado</label>
-            <input type="text" th:field="*{estado}" class="form-control" placeholder="Ej: Pendiente, En tránsito, Entregado"/>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Fecha de Factura</label>
-            <input type="datetime-local" th:field="*{fechaFactura}" class="form-control"/>
-        </div>
-
-        <div class="form-check mb-4">
-            <input class="form-check-input" type="checkbox" th:field="*{pagado}" id="pagado"/>
-            <label class="form-check-label" for="pagado">Pagado</label>
-        </div>
-
-        <div class="d-flex justify-content-between">
+        <!-- Botones -->
+        <div class="d-flex justify-content-between mb-5">
             <a th:href="@{/encomiendas/list}" class="btn btn-outline-secondary">← Cancelar</a>
             <button type="submit" class="btn btn-primary">Guardar Encomienda</button>
         </div>

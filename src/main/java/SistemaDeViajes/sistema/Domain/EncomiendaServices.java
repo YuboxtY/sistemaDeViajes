@@ -28,14 +28,13 @@ public class EncomiendaServices implements SistemaDeViajes.sistema.Services.Enco
 
     @Override
     @Transactional
-    public void eliminar(Encomienda encomienda) {
-        encomiendaDao.delete(encomienda);
-
+    public void eliminar(Long idEncomienda) {
+        encomiendaDao.deleteById(idEncomienda);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Encomienda encontrarEncomienda(Encomienda encomienda) {
-        return encomiendaDao.findById(encomienda.getIdEncomienda()).orElse(null); // Devuelve la encomienda si se encuentra, de lo contrario devuelve null
+    public Encomienda encontrarEncomienda(Long idEncomienda) {
+        return encomiendaDao.findById(idEncomienda).orElse(null);
     }
 }

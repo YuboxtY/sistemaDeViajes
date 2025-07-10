@@ -20,9 +20,11 @@ public class Cliente implements Serializable {
     private String nombre;
     @NotEmpty
     private String apellido;
-    @NotEmpty
+
+    @Column(name="email", nullable= true)
     @Email
     private String email;
+
     private String telefono;
 }
 

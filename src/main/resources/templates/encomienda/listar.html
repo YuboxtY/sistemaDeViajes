@@ -30,6 +30,7 @@
                             <th>N° Envío</th>
                             <th>Remitente</th>
                             <th>Destinatario</th>
+                            <th>Fecha</th>
                             <th>Tipo</th>
                             <th>Estado</th>
                             <th class="text-center">Acciones</th>
@@ -39,8 +40,9 @@
                         <tr th:each="encomienda : ${encomiendas}">
                             <td th:text="${encomienda.idEncomienda}"></td>
                             <td th:text="${encomienda.numeroDeEnvio}"></td>
-                            <td th:text="${encomienda.remitente.nombre}"></td>
-                            <td th:text="${encomienda.destinatario.nombre}"></td>
+                            <td th:text="${encomienda.remitente.nombre} + ' ' + ${encomienda.remitente.apellido}"></td>
+                            <td th:text="${encomienda.destinatario.nombre} + ' ' + ${encomienda.destinatario.apellido}"></td>
+                            <td th:text="${#temporals.format(encomienda.fechaEnvio,'dd/MM/yyyy')}"></td>
                             <td th:text="${encomienda.tipo}"></td>
                             <td th:text="${encomienda.estado}"></td>
                             <td class="text-center">
@@ -51,6 +53,11 @@
                                        class="btn btn-outline-danger btn-sm"
                                        th:onclick="'return confirm(\'¿Estás seguro de eliminar esta encomienda?\')'">
                                         Eliminar
+                                    </a>
+                                    <!-- Botón Factura -->
+                                    <a th:href="@{'/encomiendas/factura/' + ${encomienda.idEncomienda}}"
+                                       class="btn btn-info btn-sm">
+                                        Factura
                                     </a>
                                 </div>
                             </td>
