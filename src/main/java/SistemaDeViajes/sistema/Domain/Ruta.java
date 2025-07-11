@@ -21,8 +21,6 @@ public class Ruta implements Serializable {
 
     private String origen;
     private String destino;
-    private String horario;
-
 
     //private List<Unidad> unidades; // Relación con la entidad Unidad
 
