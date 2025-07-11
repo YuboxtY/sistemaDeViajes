@@ -1,4 +1,4 @@
-package SistemaDeViajes.sistema.dao;
+package SistemaDeViajes.sistema.Dao;
 
 import SistemaDeViajes.sistema.Dominio.Pago;
 import org.springframework.data.repository.CrudRepository;

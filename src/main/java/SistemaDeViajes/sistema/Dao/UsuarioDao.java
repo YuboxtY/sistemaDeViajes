@@ -1,6 +1,5 @@
-package SistemaDeViajes.sistema.dao;
+package SistemaDeViajes.sistema.Dao;
 
-import SistemaDeViajes.sistema.Dominio.Boleto;
 import SistemaDeViajes.sistema.Dominio.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;

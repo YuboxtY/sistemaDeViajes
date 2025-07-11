@@ -26,8 +26,12 @@ public class Boleto implements Serializable {
     @JoinColumn(name = "idTurno")
     private Turno turno; // Turno del viaje para el cual se compra el boleto
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idAsiento")
+    @OneToMany(mappedBy = "boleto", cascade = CascadeType.ALL)
     private List<Asiento> asientos; // Lista de asientos reservados en el boleto
-
+    private double subtotal; // Precio del boleto
+    private double iva;
+    private double total; // Total a pagar por el boleto
+    private String fechaCompra;
+    private String formaPago;
+    // Fecha de compra del boleto
 }

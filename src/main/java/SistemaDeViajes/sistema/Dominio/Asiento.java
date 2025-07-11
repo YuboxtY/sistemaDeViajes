@@ -22,8 +22,8 @@ public class Asiento implements Serializable {
     private String numero; // Número del asiento, por ejemplo "1A", "2B", etc.
     @NotNull
     private boolean disponibilidad; // Estado del asiento, por ejemplo "disponible", "reservado", "ocupado"
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_unidad")
-    private List<Unidad> unidades; // Asumiendo que tienes una entidad Unidad que representa la unidad de transporte
+    @ManyToOne
+    @JoinColumn(name = "id_boleto")
+    private Boleto boleto; // Asumiendo que tienes una entidad Unidad que representa la unidad de transporte
 
 }

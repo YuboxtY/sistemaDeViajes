@@ -27,6 +27,9 @@ public class Turno implements Serializable {
     @JoinColumn(name = "placa_unidad")
     private Unidad unidades;
 
+    @OneToMany(mappedBy = "turno", cascade = CascadeType.ALL)
+    private List<Boleto> boletos;
+
     private LocalDate fecha;
     private LocalTime hora;
 }

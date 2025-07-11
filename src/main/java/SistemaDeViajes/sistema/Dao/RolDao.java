@@ -1,4 +1,4 @@
-package SistemaDeViajes.sistema.dao.services;
+package SistemaDeViajes.sistema.Dao;
 
 import SistemaDeViajes.sistema.Dominio.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;

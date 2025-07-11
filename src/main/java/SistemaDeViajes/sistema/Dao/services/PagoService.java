@@ -1,4 +1,4 @@
-package SistemaDeViajes.sistema.dao.services;
+package SistemaDeViajes.sistema.Dao.services;
 
 import SistemaDeViajes.sistema.Dominio.Pago;
 
@@ -10,5 +10,5 @@ public interface PagoService {
     public List<Pago> listaPagos();
     public void guardar (Pago pago );
     public void eliminar (Pago pago);
-    public Pago encontrarFBoleto(Pago pago);
+    public Pago encontrarPago(Pago pago);
 }
