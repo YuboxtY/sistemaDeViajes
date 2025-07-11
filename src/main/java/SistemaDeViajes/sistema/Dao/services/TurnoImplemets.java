@@ -13,7 +13,7 @@ public class TurnoImplemets implements TurnoService {
     @Autowired //inyeccion de depdendencia para instanciar la clase
     private TurnoDao turnoDao;
     @Override
-    public List<Turno> listaBoleto() {
+    public List<Turno> listaTurno() {
         return (List<Turno>) turnoDao.findAll();//encuentre de persona dao(capa de datos) todos los campos
     }
 

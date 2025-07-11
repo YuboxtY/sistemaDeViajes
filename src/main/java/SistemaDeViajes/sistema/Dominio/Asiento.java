@@ -23,7 +23,11 @@ public class Asiento implements Serializable {
     @NotNull
     private boolean disponibilidad; // Estado del asiento, por ejemplo "disponible", "reservado", "ocupado"
     @ManyToOne
-    @JoinColumn(name = "id_boleto")
+    @JoinColumn(name = "idBoleto")
     private Boleto boleto; // Asumiendo que tienes una entidad Unidad que representa la unidad de transporte
+
+    @ManyToOne
+    @JoinColumn(name = "placa")
+    private Unidad unidad;
 
 }

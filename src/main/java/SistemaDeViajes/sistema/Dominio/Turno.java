@@ -24,8 +24,8 @@ public class Turno implements Serializable {
     private Ruta ruta;
 
     @ManyToOne
-    @JoinColumn(name = "placa_unidad")
-    private Unidad unidades;
+    @JoinColumn(name = "placa")
+    private Unidad unidad;
 
     @OneToMany(mappedBy = "turno", cascade = CascadeType.ALL)
     private List<Boleto> boletos;

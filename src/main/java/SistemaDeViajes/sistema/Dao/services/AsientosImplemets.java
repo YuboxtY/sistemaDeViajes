@@ -30,4 +30,10 @@ public class AsientosImplemets implements AsientoServices {
         return asientosDao.findById(asiento.getIdAsiento()).orElse(null);
 
     }
+
+    @Override
+    public List<Asiento> obtenerAsientosDisponibles(String placa) {
+        return asientosDao.findByUnidadPlacaAndDisponibleTrue(placa);
+    }
+
 }

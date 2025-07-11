@@ -1,5 +1,6 @@
 package SistemaDeViajes.sistema.Domain;
 
+import SistemaDeViajes.sistema.Dominio.Asiento;
 import SistemaDeViajes.sistema.Dominio.Turno;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,6 +27,8 @@ public class Unidad implements Serializable { // Serializable para permitir la s
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Turno> turnos;
 
+    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Asiento> asientos;
 
     public enum estadoUnidad {
         Disponible,
