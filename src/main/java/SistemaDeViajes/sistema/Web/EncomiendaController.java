@@ -1,4 +1,4 @@
-package SistemaDeViajes.sistema.Web;
+package SistemaDeViajes.sistema.web;
 
 import SistemaDeViajes.sistema.Dao.EncomiendaDao;
 import SistemaDeViajes.sistema.Domain.Encomienda;

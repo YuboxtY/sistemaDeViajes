@@ -3,6 +3,7 @@ package SistemaDeViajes.sistema.Domain;
 
 import SistemaDeViajes.sistema.Dao.RutaDao;
 import SistemaDeViajes.sistema.Dao.UnidadDao;
+import SistemaDeViajes.sistema.Dominio.Turno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,22 +29,23 @@ public class RutaServices implements SistemaDeViajes.sistema.Services.RutaServic
     @Override
     @Transactional
     public void eliminar(Ruta ruta) {
-        // obtener las unidades asignadas a esta ruta
         Ruta rutaCompleta = rutaDao.findById(ruta.getIdRuta())
                 .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
 
-        // actualizar estado de cada unidad asignada
-        for (Unidad unidad : rutaCompleta.getUnidades()) {
-            if (unidad.getEstado() == Unidad.estadoUnidad.Asignada) {
-                unidad.setEstado(Unidad.estadoUnidad.Disponible);
-                unidadDao.save(unidad);
+        // Liberar las unidades asignadas a esta ruta a través de sus turnos
+        if (rutaCompleta.getTurnos() != null) {
+            for (Turno turno : rutaCompleta.getTurnos()) {
+                Unidad unidad = turno.getUnidad();
+                if (unidad != null && unidad.getEstado() == Unidad.estadoUnidad.Asignada) {
+                    unidad.setEstado(Unidad.estadoUnidad.Disponible);
+                    unidadDao.save(unidad);
+                }
             }
         }
 
-        // eliminar la ruta
+        // Eliminar la ruta junto con sus turnos
         rutaDao.delete(rutaCompleta);
     }
-
     @Override
     @Transactional(readOnly = true)
     public Ruta encontrarRuta(Ruta ruta) {
@@ -66,26 +68,7 @@ public class RutaServices implements SistemaDeViajes.sistema.Services.RutaServic
         return unidadDao.findByEstado(Unidad.estadoUnidad.Disponible);
     }
 
-    @Transactional
-    public void asignarUnidadARuta(Long idRuta, String placaUnidad) {
-        Ruta ruta = rutaDao.findById(idRuta)
-                .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
 
-        Unidad unidad = unidadDao.findById(placaUnidad)
-                .orElseThrow(() -> new RuntimeException("Unidad no encontrada"));
-
-        if (!ruta.getUnidades().contains(unidad)) {
-            ruta.getUnidades().add(unidad);
-            unidad.getRutas().add(ruta);
-
-            if (unidad.getEstado() == Unidad.estadoUnidad.Disponible) {
-                unidad.setEstado(Unidad.estadoUnidad.Asignada);
-            }
-
-            rutaDao.save(ruta);
-            unidadDao.save(unidad);
-        }
-    }
 
     @Transactional(readOnly = true)
     public Ruta encontrarRutaPorId(Long idRuta) {

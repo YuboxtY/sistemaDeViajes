@@ -20,7 +20,7 @@ public class Turno implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_ruta")
+    @JoinColumn(name = "idRuta")
     private Ruta ruta;
 
     @ManyToOne

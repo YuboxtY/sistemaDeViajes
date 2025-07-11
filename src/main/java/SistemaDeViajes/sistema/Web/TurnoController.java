@@ -1,22 +1,25 @@
 package SistemaDeViajes.sistema.web;
-import SistemaDeViajes.sistema.Dao.RutaDao;
-import SistemaDeViajes.sistema.Dao.UnidadDao;
+
 import SistemaDeViajes.sistema.Dao.services.TurnoService;
 import SistemaDeViajes.sistema.Domain.Ruta;
 import SistemaDeViajes.sistema.Domain.RutaServices;
-
 import SistemaDeViajes.sistema.Domain.Unidad;
-import SistemaDeViajes.sistema.Domain.UnidadServices;
 import SistemaDeViajes.sistema.Dominio.Turno;
 
+import SistemaDeViajes.sistema.Services.UnidadServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Controller
+@Slf4j
 @RequestMapping("/turnos")
 public class TurnoController {
 
@@ -29,25 +32,57 @@ public class TurnoController {
     @Autowired
     private UnidadServices unidadService;
 
+    // Vista con formulario de asignación de turno
     @GetMapping("/nuevo")
     public String nuevoTurno(Model model) {
         model.addAttribute("turno", new Turno());
         model.addAttribute("rutas", rutaService.listarRutas());
-        model.addAttribute("unidades", unidadService.listarUnidadesDisponibles()); // Solo disponibles
-        return "turnos/formulario"; // Vista para crear turno
+        model.addAttribute("unidades", unidadService.listarUnidadesDisponibles()); // Unidades disponibles
+        return "turnos/formulario";
     }
 
+    // Guardar nuevo turno desde formulario
     @PostMapping("/guardar")
     public String guardarTurno(@ModelAttribute("turno") Turno turno, RedirectAttributes redirectAttributes) {
-        turnoService.guardar(turno);
-        redirectAttributes.addFlashAttribute("success", "Turno creado correctamente.");
+        try {
+            turnoService.asignarTurno(turno.getRuta(), turno.getUnidad(), turno.getFecha(), turno.getHora());
+            redirectAttributes.addFlashAttribute("success", "Turno asignado correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error al asignar turno: " + e.getMessage());
+        }
         return "redirect:/turnos/listar";
     }
 
+    // Alternativa si envías datos manuales sin usar el objeto Turno
+    @PostMapping("/asignar")
+    public String asignarTurnoManual(@RequestParam Long idRuta,
+                                     @RequestParam String placaUnidad,
+                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime hora,
+                                     RedirectAttributes redirectAttributes) {
+        try {
+            Ruta ruta = rutaService.encontrarRutaPorId(idRuta);
+            Unidad unidad = unidadService.encontrarPorPlaca(placaUnidad);
+            turnoService.asignarTurno(ruta, unidad, fecha, hora);
+            redirectAttributes.addFlashAttribute("success", "Turno asignado correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
+        }
+        return "redirect:/turnos/listar";
+    }
+
+    // Mostrar todos los turnos
     @GetMapping("/listar")
     public String listarTurnos(Model model) {
-        var turnos = turnoService.listaTurno();
+        var turnos = turnoService.listarTurnos();
         model.addAttribute("turnos", turnos);
-        return "turnos/listar"; // Vista con tabla o cards de turnos
+        return "rutas/listar";
     }
+    @GetMapping("/gestionar")
+    public String gestionarTurnos(Model model) {
+        model.addAttribute("rutas", rutaService.listarRutas());
+        model.addAttribute("unidadesDisponibles", unidadService.listarUnidadesDisponibles());
+        return "rutas/listar"; // el nombre del archivo Thymeleaf sin extensión
+    }
+
 }

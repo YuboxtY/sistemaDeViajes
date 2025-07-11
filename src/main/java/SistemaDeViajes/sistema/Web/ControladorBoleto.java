@@ -26,7 +26,7 @@ public class ControladorBoleto {
 
     @GetMapping("/listarTurnos")
     public String listarTurnos(Model model) {
-        List<Turno> turnos = turnoService.listaTurno(); // o listaTurno(), según tu método
+        List<Turno> turnos = turnoService.listarTurnos(); // o listaTurno(), según tu método
 
         // Mapa para guardar la cantidad de asientos disponibles por cada turno
         Map<Long, Long> asientosDisponiblesPorTurno = new HashMap<>();

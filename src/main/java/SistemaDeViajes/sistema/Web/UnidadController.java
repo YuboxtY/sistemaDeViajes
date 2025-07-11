@@ -1,7 +1,7 @@
-package SistemaDeViajes.sistema.Web;
+package SistemaDeViajes.sistema.web;
 
 import SistemaDeViajes.sistema.Domain.Unidad;
-import SistemaDeViajes.sistema.Domain.UnidadServices;
+import SistemaDeViajes.sistema.Services.UnidadServices;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
