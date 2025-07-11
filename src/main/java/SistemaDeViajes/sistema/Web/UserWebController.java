@@ -10,27 +10,34 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/user-web")
 public class UserWebController {
-    @Controller
-    public class ControladorUsuario {
 
-        // … tus mappings existentes …
-
-        @GetMapping("/user-web/index")
-        public String userIndex(Principal principal, Model model) {
-            // para mostrar el nombre de usuario, si quieres
-            model.addAttribute("username", principal.getName());
-            return "user-web/index";
-        }
-
-        // opcional: un “catch-all” para redirigir /user-web al mismo index
-        @GetMapping("/user-web")
-        public String userWeb() {
-            return "redirect:/user-web/index";
-        }
+    // GET  /user-web        -> redirige a /user-web/index
+    @GetMapping
+    public String redirectToIndex() {
+        return "redirect:/user-web/index";
     }
 
+    // GET  /user-web/index  -> vista index.html bajo templates/user-web/
+    @GetMapping("/index")
+    public String userIndex(Principal principal, Model model) {
+        model.addAttribute("username", principal.getName());
+        return "user-web/index";
+    }
+
+    // GET  /user-web/contacto -> vista contacto.html bajo templates/user-web/
+    @GetMapping("/contacto")
+    public String contacto() {
+        return "user-web/contacto";
+    }
+
+    // (Opcional) GET /user-web/404 si lo quieres llamar manualmente
+    @GetMapping("/404")
+    public String userWeb404() {
+        return "error/404";
+    }
 
 }
+
 
 
 
