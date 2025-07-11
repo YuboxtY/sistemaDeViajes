@@ -73,60 +73,7 @@ public class RutaController {
 
 
 
-    // Asignar unidad a ruta
-    @PostMapping("/asignar-unidad")
-    public String asignarUnidad(
-            @RequestParam Long idRuta,
-            @RequestParam String placaUnidad,
-            RedirectAttributes redirectAttributes) {
-
-        try {
-            rutaServices.asignarUnidadARuta(idRuta, placaUnidad);
-            redirectAttributes.addFlashAttribute("success", "Unidad asignada correctamente");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al asignar unidad: " + e.getMessage());
-        }
-
-        return "redirect:/rutas/list";
-    }
 
 
-    @PostMapping("/liberar-unidad/{idRuta}")
-    public String liberarUnidad(
-            @PathVariable Long idRuta,
-            @RequestParam String placaUnidad,
-            RedirectAttributes redirectAttributes) {
-
-        try {
-            // Obtener la ruta con sus unidades
-            Ruta ruta = rutaDao.findById(idRuta)
-                    .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
-
-            // Buscar la unidad específica
-            Unidad unidad = ruta.getUnidades().stream()
-                    .filter(u -> u.getPlaca().equals(placaUnidad))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Unidad no encontrada en esta ruta"));
-
-            // Liberar la unidad (eliminar relación bidireccional)
-            ruta.getUnidades().remove(unidad);
-            unidad.getRutas().remove(ruta);
-
-            // Actualizar estado de la unidad si estaba asignada
-            if (unidad.getEstado() == Unidad.estadoUnidad.Asignada) {
-                unidad.setEstado(Unidad.estadoUnidad.Disponible);
-            }
-
-            // Guardar cambios (JPA actualiza automáticamente la tabla intermedia)
-            rutaDao.save(ruta);
-            unidadDao.save(unidad);
-
-            redirectAttributes.addFlashAttribute("success", "Unidad liberada correctamente");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al liberar unidad: " + e.getMessage());
-        }
-
-        return "redirect:/rutas/list";
-    }
 
 }

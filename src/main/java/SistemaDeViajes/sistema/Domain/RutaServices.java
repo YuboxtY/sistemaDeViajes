@@ -25,15 +25,15 @@ public class RutaServices implements SistemaDeViajes.sistema.Services.RutaServic
         rutaDao.save(ruta);
     }
 
-    //@Override
-    //@Transactional
-    //public void eliminar(Ruta ruta) {
+    @Override
+    @Transactional
+    public void eliminar(Ruta ruta) {
         // obtener las unidades asignadas a esta ruta
-        //Ruta rutaCompleta = rutaDao.findById(ruta.getIdRuta())
-          //      .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
+        Ruta rutaCompleta = rutaDao.findById(ruta.getIdRuta())
+                .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
 
         // actualizar estado de cada unidad asignada
-        //for (Unidad unidad : rutaCompleta.getUnidades()) {
+        for (Unidad unidad : rutaCompleta.getUnidades()) {
             if (unidad.getEstado() == Unidad.estadoUnidad.Asignada) {
                 unidad.setEstado(Unidad.estadoUnidad.Disponible);
                 unidadDao.save(unidad);
