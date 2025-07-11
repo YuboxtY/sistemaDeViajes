@@ -18,7 +18,9 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUsuario;
+
     private String cedula;
+
     @NotEmpty
     private String nombre;
     @NotEmpty
