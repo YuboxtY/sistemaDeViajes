@@ -1,4 +1,4 @@
-package SistemaDeViajes.sistema.services;
+package SistemaDeViajes.sistema.Services;
 
 import SistemaDeViajes.sistema.Dominio.Boleto;
 

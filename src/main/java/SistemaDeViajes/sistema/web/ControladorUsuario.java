@@ -2,8 +2,8 @@ package SistemaDeViajes.sistema.web;
 
 import SistemaDeViajes.sistema.Dominio.Rol;
 import SistemaDeViajes.sistema.Dominio.Usuario;
-import SistemaDeViajes.sistema.dao.services.RolDao;
-import SistemaDeViajes.sistema.dao.services.UsuarioService;
+import SistemaDeViajes.sistema.Dao.services.RolDao;
+import SistemaDeViajes.sistema.Dao.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
 
 @Controller
 @Slf4j

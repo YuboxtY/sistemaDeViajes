@@ -1,8 +1,8 @@
-package SistemaDeViajes.sistema.dao.services;
+package SistemaDeViajes.sistema.Dao.services;
 
 import SistemaDeViajes.sistema.Dominio.Rol;
 import SistemaDeViajes.sistema.Dominio.Usuario;
-import SistemaDeViajes.sistema.dao.UsuarioDao;
+import SistemaDeViajes.sistema.Dao.UsuarioDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
