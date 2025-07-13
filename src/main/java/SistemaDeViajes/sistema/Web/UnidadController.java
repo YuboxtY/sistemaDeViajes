@@ -52,7 +52,8 @@ public class UnidadController {
     //Guardar Unidad
     @PostMapping("/guardar")
     public String guardarUnidad(Unidad unidad, Errors errores) {
-        unidadServices.guardar(unidad); // Guarda la unidad
+        unidadServices.guardar(unidad);
+        // Guarda la unidad
         return "redirect:/unidades/list";
 // Redirige a la lista de unidades después de guardar
 

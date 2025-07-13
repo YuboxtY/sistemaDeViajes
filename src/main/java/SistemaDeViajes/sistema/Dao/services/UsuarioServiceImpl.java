@@ -56,6 +56,12 @@ public  class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         return passwordEncoder.encode(password); // Encriptar la contraseña
     }
 
+    @Override
+    public Usuario findByCedula(String cedula) {
+        return usuarioDao.findByCedula(cedula); // Asegúrate que exista este método en el Dao
+    }
+
+
 
     @Override
     @Transactional(readOnly = true)

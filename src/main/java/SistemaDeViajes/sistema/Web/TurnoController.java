@@ -42,16 +42,27 @@ public class TurnoController {
     }
 
     // Guardar nuevo turno desde formulario
-    @PostMapping("/guardar")
-    public String guardarTurno(@ModelAttribute("turno") Turno turno, RedirectAttributes redirectAttributes) {
+    @PostMapping("/guardarTurno")
+    public String guardarTurno(@RequestParam Long idRuta,
+                               @RequestParam String placaUnidad,
+                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+                               @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime hora,
+                               RedirectAttributes redirectAttributes) {
         try {
-            turnoService.asignarTurno(turno.getRuta(), turno.getUnidad(), turno.getFecha(), turno.getHora());
+            Ruta ruta = rutaService.encontrarRutaPorId(idRuta);
+            Unidad unidad = unidadService.encontrarPorPlaca(placaUnidad);
+
+            turnoService.asignarTurno(ruta, unidad, fecha, hora);
+
             redirectAttributes.addFlashAttribute("success", "Turno asignado correctamente.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al asignar turno: " + e.getMessage());
         }
+
         return "redirect:/turnos/listar";
     }
+
+
 
     // Alternativa si envías datos manuales sin usar el objeto Turno
     @PostMapping("/asignar")
@@ -74,15 +85,15 @@ public class TurnoController {
     // Mostrar todos los turnos
     @GetMapping("/listar")
     public String listarTurnos(Model model) {
-        var turnos = turnoService.listarTurnos();
-        model.addAttribute("turnos", turnos);
-        return "rutas/listar";
+        model.addAttribute("rutas", rutaService.listarRutas());
+        model.addAttribute("unidadesDisponibles", unidadService.listarUnidadesDisponibles());
+        return "turnos/listar"; // archivo HTML llamado listar.html dentro de /templates/turnos/
     }
     @GetMapping("/gestionar")
     public String gestionarTurnos(Model model) {
         model.addAttribute("rutas", rutaService.listarRutas());
         model.addAttribute("unidadesDisponibles", unidadService.listarUnidadesDisponibles());
-        return "rutas/listar"; // el nombre del archivo Thymeleaf sin extensión
+        return "turnos/listar"; // el nombre del archivo Thymeleaf sin extensión
     }
 
 }

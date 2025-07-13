@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Compra</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<header th:replace="layout/plantilla :: header"></header>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow p-4">
+                <h4 class="mb-4 text-primary text-center">Confirmar Compra</h4>
+
+                <form th:action="@{/CompraBoleto/guardarCompra}" method="post">
+                    <!-- Datos ocultos necesarios para el procesamiento -->
+                    <input type="hidden" name="turnoId" th:value="${turno.id}" />
+                    <input type="hidden" name="cedula" th:value="${cliente.cedula}" />
+                    <input type="hidden" name="precioUnitario" th:value="${precioUnitario}" />
+                    <input type="hidden" name="subtotal" th:value="${subtotal}" />
+                    <input type="hidden" name="iva" th:value="${iva}" />
+                    <input type="hidden" name="total" th:value="${total}" />
+                    <input type="hidden" name="asientosIds" th:value="${asientosIds}" />
+
+                    <!-- Información del cliente -->
+                    <h5>👤 Cliente</h5>
+                    <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+                    <p><strong>Cédula:</strong> <span th:text="${cliente.cedula}"></span></p>
+
+                    <!-- Información del turno -->
+                    <h5 class="mt-4">🚌 Información del Turno</h5>
+                    <p><strong>Origen:</strong> <span th:text="${turno.ruta.origen}"></span></p>
+                    <p><strong>Destino:</strong> <span th:text="${turno.ruta.destino}"></span></p>
+                    <p><strong>Fecha:</strong> <span th:text="${turno.fecha}"></span></p>
+                    <p><strong>Hora:</strong> <span th:text="${#temporals.format(turno.hora, 'hh:mm a')}"></span></p>
+
+                    <!-- Asientos seleccionados -->
+                    <h5 class="mt-4">🪑 Asientos</h5>
+                    <p><strong>Seleccionados:</strong> <span th:text="${asientosNumeros}">1A, 1B</span></p>
+
+                    <!-- Detalle de pago -->
+                    <h5 class="mt-4">💳 Pago</h5>
+                    <div class="mb-3">
+                        <label for="formaPago" class="form-label">Forma de pago</label>
+                        <select name="formaPago" id="formaPago" class="form-select" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </select>
+                    </div>
+
+                    <p><strong>Subtotal:</strong> $<span th:text="${subtotal}">0.00</span></p>
+                    <p><strong>IVA (15%):</strong> $<span th:text="${iva}">0.00</span></p>
+                    <h5><strong>Total a pagar:</strong> $<span th:text="${total}">0.00</span></h5>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success">Confirmar Compra</button>
+                        <a th:href="@{/CompraBoleto/listarTurnos}" class="btn btn-secondary ms-2">Cancelar</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="layout/plantilla :: footer"></footer>
+
+</body>
+</html>

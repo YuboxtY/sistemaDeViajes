@@ -59,4 +59,9 @@ public class TurnoServiceImpl implements TurnoService {
     public List<Turno> obtenerTurnosPorUnidad(Unidad unidad) {
         return turnoDao.findByUnidad(unidad);
     }
+
+    @Override
+    public Turno encontrarPorId(Long id) {
+        return turnoDao.findById(id).orElse(null);
+    }
 }

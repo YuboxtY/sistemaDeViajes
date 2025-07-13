@@ -9,11 +9,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public interface TurnoService  {
+public interface TurnoService {
 
     void asignarTurno(Ruta ruta, Unidad unidad, LocalDate fecha, LocalTime hora);
+
     List<Turno> listarTurnos();
+
     List<Turno> obtenerTurnosPorRuta(Ruta ruta);
+
     List<Turno> obtenerTurnosPorUnidad(Unidad unidad);
+
+    Turno encontrarPorId(Long id);
 
 }

@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class AsientosImplemets implements AsientoServices {
-    @Autowired //inyeccion de depdendencia para instanciar la clase
+
+    @Autowired
     private AsientoDao asientosDao;
+
     @Override
     public List<Asiento> listaBoleto() {
-        return (List<Asiento>) asientosDao.findAll();//encuentre de persona dao(capa de datos) todos los campos
+        return asientosDao.findAll();
     }
 
     @Override
@@ -28,12 +31,10 @@ public class AsientosImplemets implements AsientoServices {
     @Override
     public Asiento encontrarAsientos(Asiento asiento) {
         return asientosDao.findById(asiento.getIdAsiento()).orElse(null);
-
     }
 
     @Override
     public List<Asiento> obtenerAsientosDisponibles(String placa) {
-        return asientosDao.findByUnidadPlacaAndDisponibleTrue(placa);
+        return asientosDao.findByUnidadPlacaAndEstado(placa, "disponible");
     }
-
 }
