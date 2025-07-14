@@ -196,6 +196,8 @@ public class ControladorBoleto {
             return 3.00;
         if ((inicio.equals("Nabon") && final_r.equals("Cochapata")) || (inicio.equals("Cochapata") && final_r.equals("Nabon")))
             return 1.00;
+        if ((inicio.equals("Santa Rosa") && final_r.equals("Cuenca")) || (inicio.equals("Cochapata") && final_r.equals("Nabon")))
+            return 7.00;
         return 0.0;
     }
 }
