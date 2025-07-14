@@ -21,14 +21,15 @@ public class Asiento implements Serializable {
     @NotNull
     private String numero;
 
-    @Column(nullable = true, length = 15)
-    private String estado; // "disponible", "reservado", "comprado"
+    @Column(length = 15)
+    private String estado; // "disponible", "reservado", "no disponible"
 
-    @ManyToOne
-    @JoinColumn(name = "idBoleto")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idBoleto") // FK correcta hacia Boleto
     private Boleto boleto;
 
-    @ManyToOne
-    @JoinColumn(name = "placa") // este nombre debe coincidir con tu columna FK
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "placa", referencedColumnName = "placa") // Asegura que coincida con @Id de Unidad
     private Unidad unidad;
 }
+

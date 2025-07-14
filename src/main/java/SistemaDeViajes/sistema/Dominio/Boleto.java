@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "boletos")
+@Table(name = "boleto")
 public class Boleto implements Serializable {
 
     private static final long serialVersionUID = 1l; // Constante long

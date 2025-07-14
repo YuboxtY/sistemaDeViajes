@@ -10,7 +10,4 @@ public interface AsientoServices {
     public void eliminar (Asiento asiento);
     public Asiento encontrarAsientos(Asiento asiento);
     public List<Asiento> obtenerAsientosDisponibles(String placa);
-
-
-
 }

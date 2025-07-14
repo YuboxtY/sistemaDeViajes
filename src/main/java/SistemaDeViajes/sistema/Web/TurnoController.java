@@ -51,6 +51,9 @@ public class TurnoController {
         try {
             Ruta ruta = rutaService.encontrarRutaPorId(idRuta);
             Unidad unidad = unidadService.encontrarPorPlaca(placaUnidad);
+            if (unidad.getAsientos() == null || unidad.getAsientos().isEmpty()) {
+                unidadService.guardar(unidad); // Esto generará los asientos
+            }
 
             turnoService.asignarTurno(ruta, unidad, fecha, hora);
 
