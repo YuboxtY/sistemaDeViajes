@@ -33,12 +33,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/CompraBoleto")
 public class ControladorBoleto {
 
-    @Autowired private TurnoService turnoService;
-    @Autowired private AsientoServices asientoServices;
-    @Autowired private AsientoDao asientoDao;
-    @Autowired private BoletoDao boletoRepository;
-    @Autowired private UsuarioService usuarioService;
-    @Autowired private BoletoService boletoService;
+    @Autowired
+    private TurnoService turnoService;
+    @Autowired
+    private AsientoServices asientoServices;
+    @Autowired
+    private AsientoDao asientoDao;
+    @Autowired
+    private BoletoDao boletoRepository;
+    @Autowired
+    private UsuarioService usuarioService;
+    @Autowired
+    private BoletoService boletoService;
 
     @GetMapping("/listarTurnos")
     public String listarTurnos(Model model) {
@@ -81,7 +87,9 @@ public class ControladorBoleto {
                            Model model) {
 
         String cedula = userDetails.getUsername();
-        Usuario cliente = usuarioService.findByCedula(cedula);
+        Usuario cliente = usuarioService.findByCedula(cedula)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con cédula: " + cedula));
+
         Turno turno = turnoService.encontrarPorId(turnoId);
         List<Asiento> asientos = asientoDao.findAllById(asientosSeleccionados);
 
@@ -121,7 +129,7 @@ public class ControladorBoleto {
             return "CompraBoleto/factura";
         }
 
-        Usuario cliente = usuarioService.findByCedula(cedula);
+        Usuario cliente = usuarioService.findByCedula(cedula).orElse(null);
         Turno turno = turnoService.encontrarPorId(turnoId);
 
         if (cliente == null || turno == null) {
@@ -154,10 +162,8 @@ public class ControladorBoleto {
         }
         asientoDao.saveAll(asientos);
 
-        // Asignar lista al boleto para mostrar en vista
         boleto.setAsientos(asientos);
 
-        // Generar y copiar el código QR
         try {
             Path directorioQR = Paths.get("src/main/resources/static/qrcodes");
             Files.createDirectories(directorioQR);
@@ -167,7 +173,6 @@ public class ControladorBoleto {
 
             QRCodeUtil.generateQRCodeImage(qrText, 300, 300, qrPath.toString());
 
-            // Copiar al classpath para ser servible desde navegador
             Path staticDir = Paths.get("target/classes/static/qrcodes");
             Files.createDirectories(staticDir);
             Files.copy(qrPath, staticDir.resolve(qrPath.getFileName()), StandardCopyOption.REPLACE_EXISTING);
@@ -183,7 +188,6 @@ public class ControladorBoleto {
 
         return "CompraBoleto/confirmacion";
     }
-
 
     private double calcular_precios(String inicio, String final_r) {
         if ((inicio.equals("Nabon") && final_r.equals("Cuenca")) || (inicio.equals("Cuenca") && final_r.equals("Nabon")))

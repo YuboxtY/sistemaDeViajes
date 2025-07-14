@@ -20,11 +20,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public  class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
+public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Autowired //inyeccion de depdendencia para instanciar la clase
     private UsuarioDao usuarioDao;
+
     @Override
-    @Transactional(readOnly = true)//tranasaccion de lectura - no  afecta a la base de datos //comit guarda lo dle objeto a la base de datos//solo de lectura
+    @Transactional(readOnly = true)
+//tranasaccion de lectura - no  afecta a la base de datos //comit guarda lo dle objeto a la base de datos//solo de lectura
     public List<Usuario> listaUsuarios() {
         return (List<Usuario>) usuarioDao.findAll();//encuentre de persona dao(capa de datos) todos los campos
     }
@@ -59,10 +61,9 @@ public  class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public Usuario findByCedula(String cedula) {
-        return usuarioDao.findByCedula(cedula); // Asegúrate que exista este método en el Dao
+    public Optional<Usuario> findByCedula(String cedula) {
+        return usuarioDao.findByCedula(cedula);
     }
-
 
 
     @Override
@@ -81,22 +82,23 @@ public  class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
         return new User(usuario.get().getCedula(), usuario.get().getPassword(), roles);
     }
-//fin del metodo loadUserByUsername
-public Optional<Cliente> convertirUsuarioAClientePorCedula(String cedula) {
-    Optional<Usuario> usuarioOpt = usuarioDao.findByCedula(cedula);
 
-    if (usuarioOpt.isPresent()) {
-        Usuario usuario = usuarioOpt.get();
-        Cliente cliente = new Cliente();
-        cliente.setCedula(usuario.getCedula());
-        cliente.setNombre(usuario.getNombre());
-        cliente.setApellido(usuario.getApellido());
-        cliente.setCorreo(usuario.getEmail());
-        return Optional.of(cliente);
+    //fin del metodo loadUserByUsername
+    public Optional<Cliente> convertirUsuarioAClientePorCedula(String cedula) {
+        Optional<Usuario> usuarioOpt = usuarioDao.findByCedula(cedula);
+
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            Cliente cliente = new Cliente();
+            cliente.setCedula(usuario.getCedula());
+            cliente.setNombre(usuario.getNombre());
+            cliente.setApellido(usuario.getApellido());
+            cliente.setCorreo(usuario.getEmail());
+            return Optional.of(cliente);
+        }
+
+        return Optional.empty();
     }
-
-    return Optional.empty();
-}
 
 
 }

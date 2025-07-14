@@ -6,7 +6,7 @@ import SistemaDeViajes.sistema.Domain.Ruta;
 import SistemaDeViajes.sistema.Domain.RutaServices;
 
 import SistemaDeViajes.sistema.Domain.Unidad;
-import SistemaDeViajes.sistema.Domain.UnidadServices;
+import SistemaDeViajes.sistema.Services.UnidadServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class RutaController {
     @Autowired
     private RutaServices rutaServices;
     @Autowired
-    private UnidadServices unidadServices;
+    private SistemaDeViajes.sistema.Services.UnidadServices unidadServices;
 
     @Autowired
     private RutaDao rutaDao;
