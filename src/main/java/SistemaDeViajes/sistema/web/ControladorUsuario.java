@@ -2,7 +2,7 @@ package SistemaDeViajes.sistema.web;
 
 import SistemaDeViajes.sistema.Dominio.Rol;
 import SistemaDeViajes.sistema.Dominio.Usuario;
-import SistemaDeViajes.sistema.Dao.RolDao;
+import SistemaDeViajes.sistema.Dao.services.RolDao;
 import SistemaDeViajes.sistema.Dao.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -21,6 +21,7 @@ public class Encomienda implements Serializable {
     @Column(name = "numero_de_envio", unique = true, nullable = false)
     private String numeroDeEnvio;
 
+
     // Remitente (obligatorio, cascada)
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = { CascadeType.PERSIST, CascadeType.MERGE },
@@ -35,12 +36,11 @@ public class Encomienda implements Serializable {
     @JoinColumn(name = "destinatario_id", nullable = false)
     private Cliente destinatario;
 
-    // -- Eliminamos el enum TipoEncomienda y hacemos tipo texto libre --
     @Column(name = "tipo", nullable = false, length = 100)
     private String tipo;
 
-    // Estado de la encomienda (enum)
     public enum EstadoEncomienda { Pendiente, Enviado, Entregado, Cancelado }
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoEncomienda estado;
@@ -48,8 +48,8 @@ public class Encomienda implements Serializable {
     @Column(name = "fecha_envio", nullable = false)
     private LocalDateTime fechaEnvio;
 
-    // Pago y facturación
     public enum MetodoPago { EFECTIVO, TARJETA, TRANSFERENCIA }
+
     @Enumerated(EnumType.STRING)
     @Column(name = "metodo_pago", nullable = false)
     private MetodoPago metodoPago;
@@ -66,7 +66,6 @@ public class Encomienda implements Serializable {
     @Column(name = "fecha_factura", nullable = false)
     private LocalDateTime fechaFactura;
 
-
     private boolean pagado;
 
     @Column(length = 500)
@@ -75,12 +74,10 @@ public class Encomienda implements Serializable {
     @PrePersist
     @PreUpdate
     private void calcularCampos() {
-        // Calcula IVA y total
         if (precioSubtotal != null) {
-            this.iva   = precioSubtotal.multiply(new BigDecimal("0.12"));
+            this.iva = precioSubtotal.multiply(new BigDecimal("0.12"));
             this.total = precioSubtotal.add(this.iva);
         }
-        // Sincroniza fechaFactura con fechaEnvio
         this.fechaFactura = this.fechaEnvio;
     }
 }

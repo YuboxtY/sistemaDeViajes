@@ -1,5 +1,6 @@
 package SistemaDeViajes.sistema.Dao.services;
 
+import SistemaDeViajes.sistema.Dominio.Cliente;
 import SistemaDeViajes.sistema.Dominio.Rol;
 import SistemaDeViajes.sistema.Dominio.Usuario;
 import SistemaDeViajes.sistema.Dao.UsuarioDao;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public  class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
@@ -66,18 +68,35 @@ public  class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioDao.findByCedula(username);
-        if (usuario == null) {
+        Optional<Usuario> usuario = usuarioDao.findByCedula(username);
+        if (usuario.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
 
         var roles = new ArrayList<GrantedAuthority>();
-        Rol rol = usuario.getRol();
+        Rol rol = usuario.get().getRol();
         if (rol != null) {
             roles.add(new SimpleGrantedAuthority(rol.getNombre()));
         }
 
-        return new User(usuario.getCedula(), usuario.getPassword(), roles);
+        return new User(usuario.get().getCedula(), usuario.get().getPassword(), roles);
     }
 //fin del metodo loadUserByUsername
+public Optional<Cliente> convertirUsuarioAClientePorCedula(String cedula) {
+    Optional<Usuario> usuarioOpt = usuarioDao.findByCedula(cedula);
+
+    if (usuarioOpt.isPresent()) {
+        Usuario usuario = usuarioOpt.get();
+        Cliente cliente = new Cliente();
+        cliente.setCedula(usuario.getCedula());
+        cliente.setNombre(usuario.getNombre());
+        cliente.setApellido(usuario.getApellido());
+        cliente.setCorreo(usuario.getEmail());
+        return Optional.of(cliente);
+    }
+
+    return Optional.empty();
+}
+
+
 }
