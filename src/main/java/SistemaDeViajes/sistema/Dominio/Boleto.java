@@ -4,23 +4,34 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "boletos")
+@Table(name = "boleto")
 public class Boleto implements Serializable {
 
     private static final long serialVersionUID = 1l; // Constante long
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idBoleto;
-    private String Descripcion;
-    private String cedula;
-    private String nombres;
-    private String apellidos;
-    private String ruta;
-    private String fecha;
-    private String horario;
-    private String asiento;
-    private String tarifa;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUsuario")
+    private Usuario usuario; // Usuario que compra el boleto
+    //@ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "idAsiento")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idTurno")
+    private Turno turno; // Turno del viaje para el cual se compra el boleto
+
+    @OneToMany(mappedBy = "boleto", cascade = CascadeType.ALL)
+    private List<Asiento> asientos; // Lista de asientos reservados en el boleto
+    private double subtotal; // Precio del boleto
+    private double iva;
+    private double total; // Total a pagar por el boleto
+    private String fechaCompra;
+    private String formaPago;
+    // Fecha de compra del boleto
 }

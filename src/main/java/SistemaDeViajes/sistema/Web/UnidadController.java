@@ -1,7 +1,7 @@
-package SistemaDeViajes.sistema.Web;
+package SistemaDeViajes.sistema.web;
 
 import SistemaDeViajes.sistema.Domain.Unidad;
-import SistemaDeViajes.sistema.Domain.UnidadServices;
+import SistemaDeViajes.sistema.Services.UnidadServices;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,8 @@ public class UnidadController {
     //Guardar Unidad
     @PostMapping("/guardar")
     public String guardarUnidad(Unidad unidad, Errors errores) {
-        unidadServices.guardar(unidad); // Guarda la unidad
+        unidadServices.guardar(unidad);
+        // Guarda la unidad
         return "redirect:/unidades/list";
 // Redirige a la lista de unidades después de guardar
 

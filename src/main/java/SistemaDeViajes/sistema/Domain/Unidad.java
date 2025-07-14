@@ -1,5 +1,7 @@
 package SistemaDeViajes.sistema.Domain;
 
+import SistemaDeViajes.sistema.Dominio.Asiento;
+import SistemaDeViajes.sistema.Dominio.Turno;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,9 +24,11 @@ public class Unidad implements Serializable { // Serializable para permitir la s
     @Enumerated(EnumType.STRING) // Indica que el campo es un enumerado y se almacenará como cadena
     private estadoUnidad estado; // Estado de la unidad (disponible, asignada, en mantenimiento)
 
-    @ManyToMany(mappedBy = "unidades", fetch = FetchType.LAZY)
-    private List<Ruta> rutas; // Relación con la entidad Ruta
+    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
+    private List<Turno> turnos;
 
+    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Asiento> asientos;
 
     public enum estadoUnidad {
         Disponible,
