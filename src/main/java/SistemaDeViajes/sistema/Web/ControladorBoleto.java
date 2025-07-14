@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -140,7 +141,7 @@ public class ControladorBoleto {
 
         boleto = boletoRepository.save(boleto);
 
-        // Procesar asientos
+        // Procesar los IDs de los asientos
         List<Long> asientosIds = Arrays.stream(asientosIdsRaw.replaceAll("[\\[\\]\\s]", "").split(","))
                 .filter(s -> !s.isEmpty())
                 .map(Long::parseLong)
@@ -153,10 +154,10 @@ public class ControladorBoleto {
         }
         asientoDao.saveAll(asientos);
 
-        // Asignar los asientos al boleto (para la vista)
+        // Asignar lista al boleto para mostrar en vista
         boleto.setAsientos(asientos);
 
-        // Generar QR
+        // Generar y copiar el código QR
         try {
             Path directorioQR = Paths.get("src/main/resources/static/qrcodes");
             Files.createDirectories(directorioQR);
@@ -164,10 +165,16 @@ public class ControladorBoleto {
             String qrText = "Boleto #" + boleto.getIdBoleto() + ", Total: $" + boleto.getTotal();
             Path qrPath = directorioQR.resolve("boleto-" + boleto.getIdBoleto() + ".png");
 
-            QRCodeUtil.generateQRCodeImage(qrText, 200, 200, qrPath.toString());
+            QRCodeUtil.generateQRCodeImage(qrText, 300, 300, qrPath.toString());
+
+            // Copiar al classpath para ser servible desde navegador
+            Path staticDir = Paths.get("target/classes/static/qrcodes");
+            Files.createDirectories(staticDir);
+            Files.copy(qrPath, staticDir.resolve(qrPath.getFileName()), StandardCopyOption.REPLACE_EXISTING);
 
             model.addAttribute("qrImage", "/qrcodes/" + qrPath.getFileName());
         } catch (Exception e) {
+            e.printStackTrace();
             model.addAttribute("qrError", "No se pudo generar el código QR.");
         }
 
@@ -176,6 +183,7 @@ public class ControladorBoleto {
 
         return "CompraBoleto/confirmacion";
     }
+
 
     private double calcular_precios(String inicio, String final_r) {
         if ((inicio.equals("Nabon") && final_r.equals("Cuenca")) || (inicio.equals("Cuenca") && final_r.equals("Nabon")))
