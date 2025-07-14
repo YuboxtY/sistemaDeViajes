@@ -2,7 +2,6 @@ package SistemaDeViajes.sistema.Dao.services;
 
 import SistemaDeViajes.sistema.Domain.Ruta;
 import SistemaDeViajes.sistema.Domain.Unidad;
-import SistemaDeViajes.sistema.Dominio.Boleto;
 import SistemaDeViajes.sistema.Dominio.Turno;
 
 import java.time.LocalDate;

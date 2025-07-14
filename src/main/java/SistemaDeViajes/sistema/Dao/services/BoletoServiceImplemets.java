@@ -1,9 +1,7 @@
 package SistemaDeViajes.sistema.Dao.services;
 
 import SistemaDeViajes.sistema.Dao.BoletoDao;
-import SistemaDeViajes.sistema.Dao.UsuarioDao;
 import SistemaDeViajes.sistema.Dominio.Boleto;
-import SistemaDeViajes.sistema.Dominio.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
