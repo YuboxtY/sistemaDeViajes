@@ -22,9 +22,9 @@ public class Unidad implements Serializable { // Serializable para permitir la s
     @Enumerated(EnumType.STRING) // Indica que el campo es un enumerado y se almacenará como cadena
     private estadoUnidad estado; // Estado de la unidad (disponible, asignada, en mantenimiento)
 
-    @ManyToMany(mappedBy = "unidades", fetch = FetchType.LAZY)
-    private List<Ruta> rutas; // Relación con la entidad Ruta
-
+//    @ManyToMany(mappedBy = "unidades", fetch = FetchType.LAZY)
+//    private List<Ruta> rutas; // Relación con la entidad Ruta
+//
 
     public enum estadoUnidad {
         Disponible,

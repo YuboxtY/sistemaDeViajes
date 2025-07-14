@@ -30,9 +30,9 @@
                             <th>ID</th>
                             <th>Origen</th>
                             <th>Destino</th>
-                            <th>Horario</th>
-                            <th>Unidades Asignadas</th>
-                            <th>Asignar Unidad</th>
+                            <!--                            <th>Horario</th>-->
+                            <!--                            <th>Unidades Asignadas</th>-->
+                            <!--                            <th>Asignar Unidad</th>-->
                             <th>Acciones</th>
                         </tr>
                         </thead>
@@ -41,42 +41,42 @@
                             <td th:text="${ruta.idRuta}"></td>
                             <td th:text="${ruta.origen}"></td>
                             <td th:text="${ruta.destino}"></td>
-                            <td th:text="${ruta.horario}"></td>
-                            <td>
-                                <div th:if="${!ruta.unidades.empty}">
-                                    <div class="d-flex flex-column gap-1" th:each="unidad : ${ruta.unidades}">
-                                        <div class="d-flex justify-content-between align-items-center bg-white border p-2 rounded shadow-sm">
-                                            <span th:text="${unidad.placa} + ' - ' + ${unidad.modelo}"></span>
-                                            <form th:action="@{'/rutas/liberar-unidad/' + ${ruta.idRuta}}" method="post">
-                                                <input type="hidden" name="placaUnidad" th:value="${unidad.placa}">
-                                                <button type="submit" class="btn btn-outline-danger btn-sm"
-                                                        th:onclick="'return confirm(\'¿Liberar esta unidad?\')'">
-                                                    Liberar
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span th:if="${ruta.unidades.empty}">Ninguna unidad asignada</span>
-                            </td>
-                            <td>
-                                <form th:action="@{/rutas/asignar-unidad}" method="post" class="d-grid gap-2">
-                                    <input type="hidden" name="idRuta" th:value="${ruta.idRuta}">
-                                    <select class="form-select form-select-sm" name="placaUnidad">
-                                        <option value="">Seleccione una unidad</option>
-                                        <option th:each="unidad : ${unidadesDisponibles}"
-                                                th:value="${unidad.placa}"
-                                                th:text="${unidad.placa} + ' - ' + ${unidad.modelo}">
-                                        </option>
-                                    </select>
-                                    <button type="submit" class="btn btn-success btn-sm">Asignar</button>
-                                </form>
-                            </td>
+                            <!--                            <td th:text="${ruta.horario}"></td>-->
+                            <!--                            <td>-->
+                            <!--&lt;!&ndash;                                <div th:if="${!ruta.unidades.empty}">&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                    <div class="d-flex flex-column gap-1" th:each="unidad : ${ruta.unidades}">&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                        <div class="d-flex justify-content-between align-items-center bg-white border p-2 rounded shadow-sm">&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                            <span th:text="${unidad.placa} + ' - ' + ${unidad.modelo}"></span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                            <form th:action="@{'/rutas/liberar-unidad/' + ${ruta.idRuta}}" method="post">&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                <input type="hidden" name="placaUnidad" th:value="${unidad.placa}">&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                <button type="submit" class="btn btn-outline-danger btn-sm"&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                        th:onclick="'return confirm(\'¿Liberar esta unidad?\')'">&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                    Liberar&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                                </button>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                            </form>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                        </div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                <span th:if="${ruta.unidades.empty}">Ninguna unidad asignada</span>&ndash;&gt;-->
+                            <!--                            </td>-->
+                            <!--                            <td>-->
+                            <!--                                <form th:action="@{/rutas/asignar-unidad}" method="post" class="d-grid gap-2">-->
+                            <!--                                    <input type="hidden" name="idRuta" th:value="${ruta.idRuta}">-->
+                            <!--                                    <select class="form-select form-select-sm" name="placaUnidad">-->
+                            <!--                                        <option value="">Seleccione una unidad</option>-->
+                            <!--                                        <option th:each="unidad : ${unidadesDisponibles}"-->
+                            <!--                                                th:value="${unidad.placa}"-->
+                            <!--                                                th:text="${unidad.placa} + ' - ' + ${unidad.modelo}">-->
+                            <!--                                        </option>-->
+                            <!--                                    </select>-->
+                            <!--                                    <button type="submit" class="btn btn-success btn-sm">Asignar</button>-->
+                            <!--                                </form>-->
+                            <!--                            </td>-->
                             <td>
                                 <div class="d-flex flex-column gap-1">
-                                    <a th:href="@{'/rutas/editar/' + ${ruta.idRuta}}"
-                                       th:classappend="${ruta.unidades.empty} ? 'btn btn-warning btn-sm' : 'btn btn-secondary btn-sm disabled'"
-                                       th:onclick="${ruta.unidades.empty} ? '' : 'alert(\'Debe liberar todas las unidades asignadas antes de editar\'); return false'">
+                                    <a th:href="@{'/rutas/editar/' + ${ruta.idRuta}}">
+                                        <!--                                       th:classappend="${ruta.unidades.empty} ? 'btn btn-warning btn-sm' : 'btn btn-secondary btn-sm disabled'"-->
+                                        <!--                                       th:onclick="${ruta.unidades.empty} ? '' : 'alert(\'Debe liberar todas las unidades asignadas antes de editar\'); return false'">-->
                                         Editar
                                     </a>
                                     <a class="btn btn-outline-danger btn-sm"

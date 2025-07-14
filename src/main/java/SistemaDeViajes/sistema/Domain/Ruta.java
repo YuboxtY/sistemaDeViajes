@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Entity
@@ -20,16 +19,18 @@ public class Ruta implements Serializable {
 
     private String origen;
     private String destino;
-    private String horario;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinTable(
-            name = "ruta_unidad",
-            joinColumns = @JoinColumn(name = "ruta_id"),
-            inverseJoinColumns = @JoinColumn(name = "unidad_id")
-    )
-    private List<Unidad> unidades; // Relación con la entidad Unidad
+//    private String horario;
+//
+//
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+//    @JoinTable(
+//            name = "ruta_unidad",
+//            joinColumns = @JoinColumn(name = "ruta_id"),
+//            inverseJoinColumns = @JoinColumn(name = "unidad_id")
+//    )
+//    private List<Unidad> unidades; // Relación con la entidad Unidad
 
 
 

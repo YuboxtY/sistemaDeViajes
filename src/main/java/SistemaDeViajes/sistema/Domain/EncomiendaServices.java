@@ -37,4 +37,13 @@ public class EncomiendaServices implements SistemaDeViajes.sistema.Services.Enco
     public Encomienda encontrarEncomienda(Long idEncomienda) {
         return encomiendaDao.findById(idEncomienda).orElse(null);
     }
+
+    // Este método busca una encomienda por su ID y devuelve la encomienda si se encuentra, de lo contrario devuelve null
+    @Override
+    @Transactional(readOnly = true)
+    public List<Encomienda> listarEncomiendasPorCedula(String cedula) {
+        return encomiendaDao.findByRemitenteCedula(cedula); // Devuelve una lista de encomiendas por cédula del remitente
+    }
+
+
 }

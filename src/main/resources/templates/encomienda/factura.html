@@ -40,9 +40,9 @@
                     <th class="p-1 text-end">Cédula:</th>
                     <td class="p-1" th:text="${encomienda.remitente.cedula}"></td>
                 </tr>
-                <tr th:if="${encomienda.remitente.email}">
-                    <th class="p-1 text-end">Email:</th>
-                    <td class="p-1" th:text="${encomienda.remitente.email}"></td>
+                <tr th:if="${encomienda.remitente.correo}">
+                    <th class="p-1 text-end">Correo:</th>
+                    <td class="p-1" th:text="${encomienda.remitente.correo}"></td>
                 </tr>
                 <tr th:if="${encomienda.remitente.telefono}">
                     <th class="p-1 text-end">Teléfono:</th>
@@ -62,9 +62,9 @@
                     <th class="p-1 text-end">Cédula:</th>
                     <td class="p-1" th:text="${encomienda.destinatario.cedula}"></td>
                 </tr>
-                <tr th:if="${encomienda.destinatario.email}">
-                    <th class="p-1 text-end">Email:</th>
-                    <td class="p-1" th:text="${encomienda.destinatario.email}"></td>
+                <tr th:if="${encomienda.destinatario.correo}">
+                    <th class="p-1 text-end">Correo:</th>
+                    <td class="p-1" th:text="${encomienda.destinatario.correo}"></td>
                 </tr>
                 <tr th:if="${encomienda.destinatario.telefono}">
                     <th class="p-1 text-end">Teléfono:</th>

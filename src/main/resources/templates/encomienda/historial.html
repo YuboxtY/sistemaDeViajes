@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de Encomiendas</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+</head>
+<body class="bg-light">
+<div class="container py-5">
+  <header class="mb-4 text-center">
+    <h2 class="text-primary">Mi Historial de Encomiendas</h2>
+  </header>
+
+  <div th:if="${encomiendas != null and !encomiendas.empty}">
+    <div class="card shadow">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead class="table-dark">
+          <tr>
+            <th>N° Envío</th>
+            <th>Destinatario</th>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+            <th>Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="e : ${encomiendas}">
+            <td th:text="${e.numeroDeEnvio}"></td>
+            <td th:text="${e.destinatario.nombre + ' ' + e.destinatario.apellido}"></td>
+            <td th:text="${#temporals.format(e.fechaEnvio, 'dd/MM/yyyy')}"></td>
+            <td th:text="${e.tipo}"></td>
+            <td th:text="${e.estado}"></td>
+            <td th:text="'$' + ${e.total}"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${encomiendas == null or encomiendas.empty}">
+    <div class="alert alert-info">No tienes encomiendas registradas.</div>
+  </div>
+
+  <div class="mt-4">
+    <a th:href="@{/}" class="btn btn-outline-primary">← Volver al inicio</a>
+  </div>
+</div>
+</body>
+</html>
