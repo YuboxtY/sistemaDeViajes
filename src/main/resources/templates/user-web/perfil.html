@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mi Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4" style="max-width: 500px; width: 100%;">
+        <h3 class="text-center mb-4">Mi Perfil</h3>
+
+        <form th:action="@{/user-web/perfil}" method="post" th:object="${usuario}">
+            <div class="mb-3">
+                <label class="form-label">Cédula</label>
+                <input type="text" th:field="*{cedula}" class="form-control" readonly/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" th:field="*{nombre}" class="form-control"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Apellido</label>
+                <input type="text" th:field="*{apellido}" class="form-control"/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" th:field="*{email}" class="form-control"/>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="/user-web/index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver al inicio
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Guardar cambios
+                </button>
+            </div>
+
+
+            <!-- mensaje de éxito -->
+            <div th:if="${param.success}" class="alert alert-success mt-3">
+                Perfil actualizado correctamente.
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

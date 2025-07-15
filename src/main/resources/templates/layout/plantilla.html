@@ -1,142 +1,98 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head th:fragment="head">
-    <meta charset="UTF-8">
-
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Trans-Nabón</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1"><!--- Meta para la vista responsive -->
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-
-          crossorigin="anonymous"> <!--- Enlace a Bootstrap CSS --->
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-
-          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-
-          crossorigin="anonymous" referrerpolicy="no-referrer"/> <!--- Enlace a Font Awesome para iconos --->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-
-            crossorigin="anonymous"></script> <!--- Enlace a Bootstrap JS --->
-
+    <!-- Bootstrap + Iconos + Fuentes -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-    <!-- CSS personalizado -->
     <style>
-        .navbar {
-            font-family: 'Poppins', sans-serif;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
         }
 
-        .option-card {
-            background-color: #ffffff;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-align: center;
-        }
-
-        .option-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        .navbar {
+            font-weight: 500;
         }
 
         .btn-orange {
             background-color: #ff6600;
             color: white;
             font-weight: bold;
-            border: none;
-            padding: 10px 20px;
             border-radius: 8px;
         }
 
         .btn-orange:hover {
             background-color: #cc5200;
-            color: white;
-        }
-
-        .option-card i {
-            font-size: 48px;
-            color: #007bff;
-            margin-bottom: 10px;
         }
     </style>
-
 </head>
+
 <body>
+<!-- HEADER / NAVBAR -->
 <header th:fragment="header">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container">
-            <a th:href="@{/}" class="navbar-brand" th:text="#{plantilla.titulo}">Empresa de Trasporte Quezada
-                Aguirre</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-bus-front"></i> <!-- Ícono de bus -->
+            <a class="navbar-brand fw-semibold" th:href="@{/}" th:text="#{plantilla.titulo}">Trans-Nabón</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
             </button>
-        </div>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse"><!--- Menú de navegación colapsable --->
-            <ul class="navbar-nav"><!--- Lista de elementos del menú de navegación --->
-                <li class="nav-item px-2">
-                    <a th:href="@{/}" class="nav-link active" th:text="#{barra.titulo}">Inicio</a>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/}" th:text="#{barra.titulo}">Inicio</a>
+                    </li>
+                </ul>
 
-            <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
-                <!--- Lista de elementos del menú de navegación para usuarios autenticados --->
-                <li class="nav-item mr-3">
-                    <a class="nav-link"> <!--- Enlace de bienvenida al usuario autenticado --->
-                        <i class="fas fa-user"></i> <!--- Icono de usuario --->
-                        <span th:text="#{barra.bienvenido}">Bienvenido</span>
-                        <span sec:authentication="name">Usuario</span>
-                    </a>
-                </li>
-                <li class="nav-item"> <!--- Botón de cierre de sesión --->
-                    <form th:action="@{/logout}" method="post"> <!--- Formulario para cerrar sesión --->
-                        <button type="submit" class="nav-link btn btn-link"
-                                style="color: white; text-decoration: none;">
-                            <i class="fas fa-user-times"></i> [[#{barra.salir}]]
-                        </button>
-                    </form>
-                </li>
-            </ul>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <!-- Cambio de idioma -->
+                    <li class="nav-item me-3">
+                        <div class="d-flex align-items-center gap-2 text-white small">
+                            <span><i class="bi bi-translate"></i></span>
+                            <a class="text-white text-decoration-none" th:href="@{/(lang=es)}">ES</a>
+                            <span>|</span>
+                            <a class="text-white text-decoration-none" th:href="@{/(lang=en)}">EN</a>
+                        </div>
+                    </li>
+
+                    <!-- Usuario autenticado -->
+                    <li class="nav-item me-3" sec:authorize="isAuthenticated()">
+                        <a class="nav-link">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span th:text="#{barra.bienvenido}">Bienvenido</span>,
+                            <span sec:authentication="name">Usuario</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button type="submit" class="btn btn-outline-light btn-sm">
+                                <i class="fas fa-sign-out-alt me-1"></i> [[#{barra.salir}]]
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-
-
 </header>
 
-<footer th:fragment="footer" class="bg-light text-black mt-3 p-3"> <!--- Pie de página de la plantilla --->
+<!-- FOOTER -->
+<footer th:fragment="footer" class="bg-light text-center text-muted py-3 mt-auto">
     <div class="container">
-        <div class="col"> <!--- Columna para el contenido del pie de página --->
-            <p class="lead text-center"> <!--- Texto del pie de página --->
-                <a th:href="@{/(lang=es)}">ES</a> | <!--- Enlace para cambiar el idioma a español --->
-                <a th:href="@{/(lang=en)}">EN</a> <!
-                <span>[[#{plantilla.pie-pagina}]]
-                    <a href="http://ucacue.edu.ec" target="_blank"> ucauce.edu.ec</a>
-                </span> <!--- Enlace al sitio web de la universidad --->
-            </p>
-        </div>
-
+        <p class="mb-0 small">
+            [[#{plantilla.pie-pagina}]]
+            <a href="https://ucacue.edu.ec" target="_blank" rel="noopener noreferrer">ucacue.edu.ec</a>
+        </p>
     </div>
 </footer>
+
 </body>
 </html>

@@ -34,8 +34,12 @@ public class UnidadServicesImpl implements UnidadServices {
     @Override
     @Transactional
     public void eliminar(Unidad unidad) {
-        unidadDao.delete(unidad);
+        Unidad existente = unidadDao.findById(unidad.getPlaca()).orElse(null);
+        if (existente != null) {
+            unidadDao.delete(existente);
+        }
     }
+
 
 
     @Transactional

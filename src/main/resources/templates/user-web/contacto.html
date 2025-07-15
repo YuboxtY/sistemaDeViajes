@@ -2,90 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es"
       th:with="page='contacto'"
       th:replace="layout/user-layout :: layout(~{::content})">
+
 <div th:fragment="content" class="py-5">
     <div class="container px-4">
 
-        <h2 class="mb-4 text-center">Contáctanos</h2>
-        <p class="text-center mb-5">
-            ¿Tienes dudas o necesitas ayuda? Escríbenos y te responderemos.
-        </p>
-
-        <!-- Mapa de Google más compacto y centrado -->
-        <div class="ratio ratio-4x3 mb-4 shadow-sm rounded" style="max-width:600px; margin:auto;">
-            <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.123456789012!2d-78.9833333!3d-2.6500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d16f2b4abcdef%3A0x1234567890abcdef!2sAv%20Padre%20Carlos%20Solano%20%2F%20V%C3%ADa%20Cuenca%2C%20Nab%C3%B3n%2C%20Ecuador!5e0!3m2!1ses!2sec!4v1699621234567"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Contáctanos</h2>
+            <p class="text-muted">¿Tienes dudas o necesitas ayuda? Escríbenos y te responderemos lo antes posible.</p>
         </div>
 
-        <div class="row gy-4">
-            <!-- Formulario de contacto (izquierda) -->
+        <!-- Mapa centrado -->
+        <div class="d-flex justify-content-center mb-5">
+            <div class="ratio ratio-16x9" style="max-width: 800px; width: 100%;">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.123456789012!2d-78.9833333!3d-2.6500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d16f2b4abcdef%3A0x1234567890abcdef!2sAv%20Padre%20Carlos%20Solano%20%2F%20V%C3%ADa%20Cuenca%2C%20Nab%C3%B3n%2C%20Ecuador!5e0!3m2!1ses!2sec!4v1699621234567"
+                        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Sección de formulario e información -->
+        <div class="row g-5 justify-content-center align-items-start">
+
+            <!-- Formulario -->
             <div class="col-lg-6">
+                <h4 class="mb-4 text-primary">Envíanos un mensaje</h4>
                 <form th:action="@{/user-web/contacto}" method="post">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" required>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="asunto" class="form-label">Asunto</label>
-                        <input type="text" class="form-control" id="asunto" name="asunto" required>
+                        <label class="form-label">Asunto</label>
+                        <input type="text" class="form-control" name="asunto" required>
                     </div>
                     <div class="mb-4">
-                        <label for="mensaje" class="form-label">Mensaje</label>
-                        <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required></textarea>
+                        <label class="form-label">Mensaje</label>
+                        <textarea class="form-control" name="mensaje" rows="5" required></textarea>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="bi bi-envelope-fill"></i> Enviar Mensaje
-                        </button>
-                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="bi bi-envelope-fill me-1"></i> Enviar mensaje
+                    </button>
                 </form>
             </div>
 
-            <!-- Información de contacto (derecha) -->
-            <div class="col-lg-6">
+            <!-- Información de contacto -->
+            <div class="col-lg-5">
+                <h4 class="mb-4 text-primary">Información de contacto</h4>
                 <ul class="list-unstyled">
                     <li class="mb-4 d-flex">
-                        <i class="bi bi-geo-alt-fill fs-2 text-primary me-3"></i>
+                        <i class="bi bi-geo-alt-fill fs-4 text-primary me-3"></i>
                         <div>
                             <strong>Dirección</strong><br/>
                             Av Padre Carlos Solano / Vía Cuenca, Nabón, Ecuador
                         </div>
                     </li>
                     <li class="mb-4 d-flex">
-                        <i class="bi bi-telephone-fill fs-2 text-primary me-3"></i>
+                        <i class="bi bi-telephone-fill fs-4 text-primary me-3"></i>
                         <div>
-                            <strong>Móvil</strong><br/>
-                            098 939 8625
+                            <strong>Móvil</strong><br/>098 939 8625
                         </div>
                     </li>
                     <li class="mb-4 d-flex">
-                        <i class="bi bi-envelope-fill fs-2 text-primary me-3"></i>
+                        <i class="bi bi-envelope-fill fs-4 text-primary me-3"></i>
                         <div>
-                            <strong>Correo electrónico</strong><br/>
-                            transqa2021@outlook.com
+                            <strong>Email</strong><br/>transqa2021@outlook.com
                         </div>
                     </li>
-                    <li class="mb-4 d-flex">
-                        <i class="bi bi-clock-fill fs-2 text-primary me-3"></i>
+                    <li class="mb-2 d-flex">
+                        <i class="bi bi-clock-fill fs-4 text-primary me-3"></i>
                         <div>
-                            <strong>Horario</strong><br/>
-                            Siempre abierto
+                            <strong>Horario</strong><br/>Siempre abierto
                         </div>
                     </li>
                 </ul>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
+
 </html>
