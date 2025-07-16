@@ -14,5 +14,10 @@ public interface UsuarioService {
     public Usuario encontrarUsuario(Usuario user);
     public String encriptarPassword(String pasword);
     public Optional<Usuario> findByCedula(String cedula);
+    List<Usuario> buscarPorCedulaONombre(String termino);
+    List<Usuario> listarTodos();
+    Usuario encontrarPorId(Long idUsuario);
+    Usuario buscarPorEmail(String email);
+
 
 }

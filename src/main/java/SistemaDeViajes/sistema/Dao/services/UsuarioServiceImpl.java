@@ -31,6 +31,16 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         return (List<Usuario>) usuarioDao.findAll();//encuentre de persona dao(capa de datos) todos los campos
     }
 
+    @Override
+    public Usuario encontrarPorId(Long idUsuario) {
+        return usuarioDao.findById(idUsuario).orElse(null);
+    }
+
+    @Override
+    public Usuario buscarPorEmail(String email) {
+        return usuarioDao.findByEmail(email);
+    }
+
 
     @Override
     @Transactional//anotacion que sirve para indicar que el metodo es una transaccion de escritura
@@ -63,6 +73,16 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public Optional<Usuario> findByCedula(String cedula) {
         return usuarioDao.findByCedula(cedula);
+    }
+
+    @Override
+    public List<Usuario> buscarPorCedulaONombre(String termino) {
+        return usuarioDao.findByCedulaContainingIgnoreCaseOrNombreContainingIgnoreCase(termino, termino);
+    }
+
+    @Override
+    public List<Usuario> listarTodos() {
+        return List.of();
     }
 
 

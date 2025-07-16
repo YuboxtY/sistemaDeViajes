@@ -1,120 +1,76 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Administrar Roles</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-        }
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/plantilla :: head"></head>
 
-        h1 {
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 5px;
-        }
+<body class="d-flex flex-column min-vh-100">
+<header th:replace="layout/plantilla :: header"></header>
 
-        .toolbar {
-            margin-bottom: 20px;
-        }
+<div class="container mt-4">
+    <h1 class="mb-4 border-bottom pb-2">Administrar Roles</h1>
 
-        .toolbar input, .toolbar button {
-            margin-right: 10px;
-            padding: 8px;
-        }
+    <!-- Barra de búsqueda -->
+    <div class="toolbar mb-3">
+        <form th:action="@{/gestionarUsuarios}" method="get" class="d-flex">
+            <input type="text" name="termino" placeholder="Buscar por: Cédula o Nombre"
+                   class="form-control me-2" th:value="${param.termino}" />
+            <button type="submit" class="btn btn-aceptar">BUSCAR</button>
+        </form>
+    </div>
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+    <!-- Tabla de usuarios -->
+    <div th:if="${usuarios != null and !usuarios.empty}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="usuario, iterStat : ${usuarios}"
+                th:classappend="${param.termino != null and
+                               (usuario.cedula.contains(param.termino) or
+                                usuario.nombre.contains(param.termino))} ? 'table-success'">
+                <td th:text="${iterStat.index + 1}">1</td>
+                <td th:text="${usuario.cedula}">0101010101</td>
+                <td th:text="${usuario.nombre}">Juan</td>
+                <td th:text="${usuario.apellido}">Perez</td>
+                <td th:text="${usuario.email}">juan@ejemplo.com</td>
+                <td>
+                    <form th:action="@{/actualizarRol}" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="usuarioId" th:value="${usuario.idUsuario}" />
+                        <select name="rolId" class="form-select me-2">
+                            <option value="1" th:selected="${usuario.rol?.idRol == 1}">Usuario</option>
+                            <option value="2" th:selected="${usuario.rol?.idRol == 2}">Administrador</option>
+                            <option value="3" th:selected="${usuario.rol?.idRol == 3}">Secretaria</option>
+                            <option value="4" th:selected="${usuario.rol?.idRol == 4}">Chofer</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+                    </form>
+                </td>
+                <td>
+                    <a th:href="@{/eliminarUsuario(idUsuario=${usuario.idUsuario})}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
+    <p th:if="${param.termino != null}" class="text-success">
+        Mostrando resultados para: <strong th:text="${param.termino}"></strong>
+    </p>
 
-        .btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-editar {
-            background-color: #2196F3;
-            color: white;
-        }
-
-        .btn-eliminar {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .btn-aceptar {
-            background-color: #0d6efd;
-            color: white;
-            margin-left: 10px;
-        }
-
-        .btn-cancelar {
-            background-color: #ccc;
-            color: black;
-        }
-
-        .acciones {
-            display: flex;
-            gap: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<h1>Administrar Roles</h1>
-
-<div class="toolbar">
-    <input type="text" placeholder="Buscar por: Cédula o Nombre"/>
-    <button class="btn btn-cancelar">CANCELAR</button>
-    <button class="btn btn-aceptar">BUSCAR</button>
+    <div th:if="${usuarios == null or usuarios.empty}">
+        <p class="text-muted">La lista de usuarios está vacía.</p>
+    </div>
 </div>
 
-<div th:if="${usuarios != null and !usuarios.empty}">
-    <table>
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Cédula</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="usuario, iterStat : ${usuarios}">
-            <td th:text="${iterStat.index + 1}">1</td>
-            <td th:text="${usuario.cedula}">0101010101</td>
-            <td th:text="${usuario.nombre}">Juan</td>
-            <td th:text="${usuario.apellido}">Perez</td>
-            <td th:text="${usuario.email}">juan@ejemplo.com</td>
-            <td class="acciones">
-                <a th:href="@{/editarUsuario/{id}(id=${usuario.idUsuario})}" class="btn btn-editar">Editar</a>
-                <a th:href="@{/eliminarUsuario(idUsuario=${usuario.idUsuario})}" class="btn btn-eliminar">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<div th:if="${usuarios == null or usuarios.empty}">
-    <p>La lista de usuarios está vacía.</p>
-</div>
-
-<div style="margin-top: 20px;">
-    <button class="btn btn-cancelar">CANCELAR</button>
-    <button class="btn btn-aceptar">ACEPTAR</button>
-</div>
-
+<footer th:replace="layout/plantilla :: footer"></footer>
 </body>
 </html>

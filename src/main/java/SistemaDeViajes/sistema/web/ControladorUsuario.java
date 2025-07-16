@@ -1,8 +1,9 @@
 package SistemaDeViajes.sistema.web;
 
+import SistemaDeViajes.sistema.Dao.services.RolServices;
 import SistemaDeViajes.sistema.Dominio.Rol;
 import SistemaDeViajes.sistema.Dominio.Usuario;
-import SistemaDeViajes.sistema.Dao.services.RolDao;
+import SistemaDeViajes.sistema.Dao.RolDao;
 import SistemaDeViajes.sistema.Dao.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,6 +25,9 @@ public class ControladorUsuario {
     private UsuarioService usuarioService;
     @Autowired
     private RolDao rolRepository;
+
+    @Autowired
+    private RolServices rolServices;
 
     @GetMapping("/")
     public String homepage() {
@@ -82,6 +87,21 @@ public class ControladorUsuario {
         return "redirect:/index";
     }
 
+    @PostMapping("/actualizarRol")
+    public String actualizarRol(@RequestParam("usuarioId") Long usuarioId,
+                                @RequestParam("rolId") Long rolId) {
+
+        Usuario usuario = usuarioService.encontrarPorId(usuarioId);
+        Rol nuevoRol = rolServices.encontrarPorId(rolId);
+
+        if (usuario != null && nuevoRol != null) {
+            usuario.setRol(nuevoRol);
+            usuarioService.guardar(usuario);
+        }
+
+        return "redirect:/administrarRoles";
+    }
+
 
     @GetMapping("/editarUsuario/{idUsuario}")
     public String editar(Usuario user, Model model) {
@@ -90,11 +110,28 @@ public class ControladorUsuario {
         return "Usuario/CrearUsuario";
     }
 
+
     @GetMapping("/eliminarUsuario")
     public String eliminar(Usuario user) {
         usuarioService.eliminar(user);
-        return "redirect:/";
+        return "redirect:/administrarRoles"; // Redirige a la página de administración de roles
     }
+    @GetMapping("/gestionarUsuarios")
+    public String gestionarUsuarios(@RequestParam(value = "termino", required = false) String termino,
+                                    Model model) {
+        List<Usuario> usuarios;
+
+        if (termino != null && !termino.trim().isEmpty()) {
+            usuarios = usuarioService.buscarPorCedulaONombre(termino.trim());
+        } else {
+            usuarios = usuarioService.listarTodos();
+        }
+
+        model.addAttribute("usuarios", usuarios);
+        return "Usuario/AdministrarRoles";
+    }
+
+
 
     @GetMapping("/administrarRoles")
     public String Tabla(Model model) {

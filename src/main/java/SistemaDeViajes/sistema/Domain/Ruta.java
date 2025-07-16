@@ -27,6 +27,10 @@ public class Ruta implements Serializable {
     @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL)
     private List<Turno> turnos;
 
-
+    public Ruta(Long idRuta) {
+        this.idRuta = idRuta;
+    }
+    public Ruta() {
+    }
 
 }

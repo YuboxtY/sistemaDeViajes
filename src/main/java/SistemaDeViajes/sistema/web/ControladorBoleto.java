@@ -14,6 +14,7 @@ import SistemaDeViajes.sistema.util.QRCodeUtil;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -145,7 +146,9 @@ public class ControladorBoleto {
         boleto.setIva(iva);
         boleto.setTotal(total);
         boleto.setFormaPago(formaPago);
-        boleto.setFechaCompra(LocalDate.now().toString());
+
+        // ✅ Corrección aplicada aquí: guardar la fecha actual correctamente
+        boleto.setFechaCompra(new Date());
 
         boleto = boletoRepository.save(boleto);
 
@@ -189,6 +192,7 @@ public class ControladorBoleto {
         return "CompraBoleto/confirmacion";
     }
 
+
     private double calcular_precios(String inicio, String final_r) {
         if ((inicio.equals("Nabon") && final_r.equals("Cuenca")) || (inicio.equals("Cuenca") && final_r.equals("Nabon")))
             return 2.00;
@@ -198,4 +202,29 @@ public class ControladorBoleto {
             return 1.00;
         return 0.0;
     }
+
+    @GetMapping("/misBoletos")
+    public String verMisBoletos(Model model, Authentication authentication) {
+        String cedula = authentication.getName(); // obtenida del login (username)
+
+        // Buscar el usuario por cédula
+        Optional<Usuario> usuarioOpt = usuarioService.findByCedula(cedula);
+        if (usuarioOpt.isEmpty()) {
+            return "redirect:/"; // o mostrar error
+        }
+
+        Usuario usuario = usuarioOpt.get();
+        Long idUsuario = usuario.getIdUsuario();
+
+        // Filtrar boletos por ID de usuario
+        List<Boleto> boletos = boletoService.listaBoleto().stream()
+                .filter(b -> b.getUsuario() != null && b.getUsuario().getIdUsuario() == idUsuario)
+                .toList();
+
+        model.addAttribute("boletos", boletos);
+        return "CompraBoleto/listarBoletosPorUsuario";
+    }
+
+
+
 }
