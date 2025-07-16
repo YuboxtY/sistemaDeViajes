@@ -1,46 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es"
-      th:with="page='index'"
       th:replace="layout/user-layout :: layout(~{::content})">
 <div th:fragment="content">
 
-    <!-- HERO con imagen de fondo e overlay para contraste -->
+    <!-- HERO full-width -->
     <header
-            class="position-relative overflow-hidden rounded-3 mb-5"
+            class="position-relative overflow-hidden mb-5"
             style="
-        background-image: url('/images/fondo1.png');
-        background-size: cover;
-        background-position: center;
-        height: 600px;
-      ">
-        <!-- Capa semitransparente -->
+            background: url('/images/fondo1.png') center center / cover no-repeat;
+            min-height: 100vh;
+            width: 100vw;
+            margin-left: calc((100% - 100vw) / 2);
+        ">
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
-        <!-- Texto centrado -->
         <div class="position-absolute top-50 start-50 translate-middle text-center text-white px-3">
-            <h1 class="display-5 fw-bold">Bienvenido a Trans-Nabón</h1>
-            <p class="lead">Todo tu transporte y envío de encomiendas en un mismo lugar</p>
-            <a class="btn btn-light btn-lg shadow" th:href="@{/CompraBoleto/listarTurnos}">
-            🚍 Reservar Viaje
+            <h1 class="display-4 fw-bold mb-3">
+                Bienvenido a <span class="text-warning">Trans-Nabón</span>
+            </h1>
+            <p class="lead mb-4">Todo tu transporte y envío de encomiendas en un mismo lugar</p>
+            <a class="btn btn-light shadow rounded-pill fw-semibold px-4 py-2"
+               th:href="@{/CompraBoleto/listarTurnos}">
+                🚍 Reservar Viaje
             </a>
-            <!-- Texto pequeño debajo del botón -->
-            <p class="small mt-2 text-white-70">Elige tu ruta, fecha y asientos</p>
+            <p class="small mt-4 text-white-50">Elige tu ruta, fecha y asientos</p>
         </div>
-
     </header>
 
-    <!-- TARJETAS DE SERVICIOS -->
-    <section class="row g-4 text-center justify-content-center">
-        <!-- Historial de Viajes -->
-        <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <i class="bi bi-clock-history fs-1 text-success"></i>
-                    <h5 class="card-title mt-3">Historial de Viajes</h5>
-                    <p class="card-text">Revisa tus viajes pasados.</p>
-                    <a class="btn btn-success w-100" th:href="@{/user-web/historial}">Ver Historial</a>
+    <!-- ¿POR QUÉ ELEGIRNOS? -->
+    <section class="container my-5">
+        <div class="bg-white rounded-4 shadow-sm p-5 text-center">
+            <h2 class="mb-4 fw-bold">¿Por qué elegir <span class="text-primary">Trans-Nabón</span>?</h2>
+            <div class="row g-5 justify-content-center">
+                <div class="col-12 col-md-4">
+                    <i class="bi bi-shield-lock fs-1 text-primary mb-3"></i>
+                    <h5 class="fw-semibold">Compra Segura</h5>
+                    <p class="text-muted">Nos preocupamos por tu seguridad en cada compra que realizas en línea.</p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <i class="bi bi-clock fs-1 text-success mb-3"></i>
+                    <h5 class="fw-semibold">Ahorro de Tiempo</h5>
+                    <p class="text-muted">Compra tu boleto desde donde estés, sin filas ni traslados innecesarios.</p>
+                </div>
+                <div class="col-12 col-md-4">
+                    <i class="bi bi-cloud-check fs-1 text-warning mb-3"></i>
+                    <h5 class="fw-semibold">Servicio 24/7</h5>
+                    <p class="text-muted">Estamos disponibles todos los días, a toda hora, sin interrupciones.</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- NUESTROS SERVICIOS -->
+    <section class="container my-5">
+        <h2 class="text-center fw-bold mb-5">Nuestros Servicios</h2>
+        <div class="row g-4">
+            <!-- Reservar Viaje -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-bus-front fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title fw-semibold">Reservar Viaje</h5>
+                        <p class="card-text text-muted">Compra tu boleto y elige tu asiento de forma sencilla y rápida.</p>
+                        <a class="btn btn-primary w-100 rounded-pill fw-semibold"
+                           th:href="@{/CompraBoleto/listarTurnos}">Ir a Viajes</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Historial de Viajes -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-clock-history fs-1 text-success mb-3"></i>
+                        <h5 class="card-title fw-semibold">Historial de Viajes</h5>
+                        <p class="card-text text-muted">Consulta todas tus compras pasadas de boletos de forma ordenada.</p>
+                        <a class="btn btn-success w-100 rounded-pill fw-semibold"
+                           th:href="@{/viajes/historial}">Ver Historial</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Historial de Encomiendas -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm text-center">
+                    <div class="card-body">
+                        <i class="bi bi-box-seam fs-1 text-warning mb-3"></i>
+                        <h5 class="card-title fw-semibold">Historial de Encomiendas</h5>
+                        <p class="card-text text-muted">Revisa y da seguimiento a tus encomiendas con facilidad.</p>
+                        <a class="btn btn-warning w-100 rounded-pill fw-semibold"
+                           th:href="@{/encomiendas/historial}">Ver Envíos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 </html>

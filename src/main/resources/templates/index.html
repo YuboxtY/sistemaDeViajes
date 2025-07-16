@@ -24,11 +24,9 @@
 <!-- CONTENIDO PRINCIPAL -->
 <div class="container my-5">
     <h1 class="text-center mb-4 text-primary fw-bold">
-        Bienvenido a <span class="text-dark">Trans-Nabón</span>
+        <span th:text="#{bienvenida}"></span> <span class="text-dark">Trans-Nabón</span>
     </h1>
-    <p class="text-center text-muted mb-5">
-        Administra todos los servicios desde un solo lugar
-    </p>
+    <p class="text-center text-muted mb-5" th:text="#{subtitulo}"></p>
 
     <!-- Tarjetas -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -37,10 +35,10 @@
         <div class="col">
             <div class="card h-100 shadow-sm rounded-4 text-center card-hover p-4">
                 <i class="bi bi-truck fs-1 text-primary mb-3"></i>
-                <h5 class="fw-semibold">Gestionar Unidades</h5>
-                <p class="text-muted">Administra el parque vehicular de la empresa.</p>
+                <h5 class="fw-semibold" th:text="#{gestionar.unidades}"></h5>
+                <p class="text-muted" th:text="#{descripcion.unidades}"></p>
                 <a th:href="@{/unidades/list}" class="btn btn-outline-primary mt-auto">
-                    <i class="bi bi-box-arrow-in-right me-1"></i> Acceder
+                    <i class="bi bi-box-arrow-in-right me-1"></i> <span th:text="#{acceder}"></span>
                 </a>
             </div>
         </div>
@@ -49,10 +47,10 @@
         <div class="col">
             <div class="card h-100 shadow-sm rounded-4 text-center card-hover p-4">
                 <i class="bi bi-geo-alt-fill fs-1 text-success mb-3"></i>
-                <h5 class="fw-semibold">Gestionar Turnos</h5>
-                <p class="text-muted">Controla y organiza los turnos de viaje.</p>
+                <h5 class="fw-semibold" th:text="#{gestionar.turnos}"></h5>
+                <p class="text-muted" th:text="#{descripcion.turnos}"></p>
                 <a th:href="@{/turnos/gestionar}" class="btn btn-outline-success mt-auto">
-                    <i class="bi bi-box-arrow-in-right me-1"></i> Acceder
+                    <i class="bi bi-box-arrow-in-right me-1"></i> <span th:text="#{acceder}"></span>
                 </a>
             </div>
         </div>
@@ -61,10 +59,10 @@
         <div class="col">
             <div class="card h-100 shadow-sm rounded-4 text-center card-hover p-4">
                 <i class="bi bi-box-fill fs-1 text-warning mb-3"></i>
-                <h5 class="fw-semibold">Gestionar Encomiendas</h5>
-                <p class="text-muted">Registra, rastrea y entrega encomiendas.</p>
+                <h5 class="fw-semibold" th:text="#{gestionar.encomiendas}"></h5>
+                <p class="text-muted" th:text="#{descripcion.encomiendas}"></p>
                 <a th:href="@{/encomiendas/list}" class="btn btn-outline-warning text-dark mt-auto">
-                    <i class="bi bi-box-arrow-in-right me-1"></i> Acceder
+                    <i class="bi bi-box-arrow-in-right me-1"></i> <span th:text="#{acceder}"></span>
                 </a>
             </div>
         </div>
@@ -73,10 +71,10 @@
         <div class="col">
             <div class="card h-100 shadow-sm rounded-4 text-center card-hover p-4">
                 <i class="bi bi-signpost-2-fill fs-1 text-info mb-3"></i>
-                <h5 class="fw-semibold">Gestionar Rutas</h5>
-                <p class="text-muted">Crea y edita las rutas de viaje fácilmente.</p>
+                <h5 class="fw-semibold" th:text="#{gestionar.rutas}"></h5>
+                <p class="text-muted" th:text="#{descripcion.rutas}"></p>
                 <a th:href="@{/rutas/list}" class="btn btn-outline-info mt-auto">
-                    <i class="bi bi-box-arrow-in-right me-1"></i> Acceder
+                    <i class="bi bi-box-arrow-in-right me-1"></i> <span th:text="#{acceder}"></span>
                 </a>
             </div>
         </div>
@@ -85,10 +83,10 @@
         <div class="col" sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="card h-100 shadow-sm rounded-4 text-center card-hover p-4">
                 <i class="bi bi-person-lines-fill fs-1 text-dark mb-3"></i>
-                <h5 class="fw-semibold">Crear Cuenta del Personal</h5>
-                <p class="text-muted">Registra nuevos usuarios del personal autorizado.</p>
+                <h5 class="fw-semibold" th:text="#{crear.personal}"></h5>
+                <p class="text-muted" th:text="#{descripcion.personal}"></p>
                 <a th:href="@{/crearPersonal}" class="btn btn-dark mt-auto">
-                    <i class="bi bi-person-plus-fill me-1"></i> Acceder
+                    <i class="bi bi-person-plus-fill me-1"></i> <span th:text="#{acceder}"></span>
                 </a>
             </div>
         </div>
@@ -97,10 +95,10 @@
         <div class="col" sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="card h-100 shadow-sm rounded-4 text-center card-hover p-4">
                 <i class="bi bi-shield-lock-fill fs-1 text-secondary mb-3"></i>
-                <h5 class="fw-semibold">Gestionar Roles</h5>
-                <p class="text-muted">Asigna y administra permisos de acceso.</p>
+                <h5 class="fw-semibold" th:text="#{gestionar.roles}"></h5>
+                <p class="text-muted" th:text="#{descripcion.roles}"></p>
                 <a th:href="@{/administrarRoles}" class="btn btn-outline-secondary mt-auto">
-                    <i class="bi bi-shield-check me-1"></i> Acceder
+                    <i class="bi bi-shield-check me-1"></i> <span th:text="#{acceder}"></span>
                 </a>
             </div>
         </div>
