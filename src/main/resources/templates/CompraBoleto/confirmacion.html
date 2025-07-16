@@ -38,7 +38,7 @@
                     <p><strong>Email:</strong> <span th:text="${boleto.usuario.email}"></span></p>
                     <hr>
                     <p><strong>Ruta:</strong> <span th:text="${boleto.turno.ruta.origen} + ' → ' + ${boleto.turno.ruta.destino}"></span></p>
-                    <p><strong>Fecha:</strong> <span th:text="${boleto.turno.fecha}"></span></p>
+                    <p><strong>Fecha de Compra:</strong><span th:text="${#dates.format(boleto.fechaCompra, 'dd/MM/yyyy')}"></span></p>
                     <p><strong>Hora:</strong> <span th:text="${#temporals.format(boleto.turno.hora, 'hh:mm a')}"></span></p>
                     <hr>
                     <p><strong>Cantidad de Asientos:</strong> <span th:text="${cantidadAsientos}"></span></p>

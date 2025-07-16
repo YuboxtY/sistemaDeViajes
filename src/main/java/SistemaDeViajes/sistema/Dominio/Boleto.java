@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -31,7 +32,8 @@ public class Boleto implements Serializable {
     private double subtotal; // Precio del boleto
     private double iva;
     private double total; // Total a pagar por el boleto
-    private String fechaCompra;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaCompra;
     private String formaPago;
     // Fecha de compra del boleto
 }

@@ -11,9 +11,9 @@ import java.util.List;
 public interface TurnoService {
 
     void asignarTurno(Ruta ruta, Unidad unidad, LocalDate fecha, LocalTime hora);
-
+    public void eliminar(Long id);
     List<Turno> listarTurnos();
-
+    public void guardar(Turno turno);
     List<Turno> obtenerTurnosPorRuta(Ruta ruta);
 
     List<Turno> obtenerTurnosPorUnidad(Unidad unidad);

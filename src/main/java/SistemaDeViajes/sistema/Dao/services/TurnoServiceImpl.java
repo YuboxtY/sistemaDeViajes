@@ -49,6 +49,18 @@ public class TurnoServiceImpl implements TurnoService {
     }
 
     @Override
+    @Transactional
+    public void guardar(Turno turno) {
+        turnoDao.save(turno);
+    }
+
+    @Override
+    @Transactional
+    public void eliminar(Long id) {
+        turnoDao.deleteById(id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Turno> obtenerTurnosPorRuta(Ruta ruta) {
         return turnoDao.findByRuta(ruta);

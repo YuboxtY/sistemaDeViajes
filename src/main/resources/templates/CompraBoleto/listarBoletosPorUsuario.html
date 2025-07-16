@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/plantilla :: head"></head>
+<body>
+<header th:replace="layout/plantilla :: header"></header>
+
+<div class="container mt-4">
+    <h2>Mis Boletos</h2>
+
+    <table class="table table-bordered mt-3" th:if="${boletos != null and !boletos.isEmpty()}">
+        <thead class="table-light">
+        <tr>
+            <th>#</th>
+            <th>ID Boleto</th>
+            <th>Fecha de Compra</th>
+            <th>Ruta</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="boleto, iterStat : ${boletos}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${boleto.idBoleto}"></td>
+            <td th:text="${#dates.format(boleto.fechaCompra, 'dd/MM/yyyy')}"></td>
+            <td th:text="${boleto.turno.ruta.origen + ' - ' + boleto.turno.ruta.destino}"></td>
+            <td th:text="${boleto.total}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div th:if="${boletos == null or boletos.empty}">
+        <p>No tienes boletos registrados.</p>
+    </div>
+</div>
+
+<footer th:replace="layout/plantilla :: footer"></footer>
+</body>
+</html>

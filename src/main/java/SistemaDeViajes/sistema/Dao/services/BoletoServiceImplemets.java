@@ -28,6 +28,11 @@ public class BoletoServiceImplemets implements BoletoService{
     }
 
     @Override
+    public List<Boleto> obtenerBoletosPorUsuarioId(Long idUsuario) {
+        return boletoDao.findByUsuarioIdUsuario(idUsuario);
+    }
+
+    @Override
     public Boleto encontrarBoleto(Boleto boleto) {
         return boletoDao.findById(boleto.getIdBoleto()).orElse(null);
     }

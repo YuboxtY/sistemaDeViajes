@@ -5,8 +5,8 @@ import SistemaDeViajes.sistema.Domain.Ruta;
 import SistemaDeViajes.sistema.Domain.RutaServices;
 import SistemaDeViajes.sistema.Domain.Unidad;
 import SistemaDeViajes.sistema.Dominio.Turno;
-
 import SistemaDeViajes.sistema.Services.UnidadServices;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,16 +32,16 @@ public class TurnoController {
     @Autowired
     private UnidadServices unidadService;
 
-    // Vista con formulario de asignación de turno
+    // 👉 Mostrar formulario para crear un nuevo turno
     @GetMapping("/nuevo")
     public String nuevoTurno(Model model) {
         model.addAttribute("turno", new Turno());
         model.addAttribute("rutas", rutaService.listarRutas());
-        model.addAttribute("unidades", unidadService.listarUnidadesDisponibles()); // Unidades disponibles
-        return "turnos/formulario";
+        model.addAttribute("unidades", unidadService.listarUnidadesDisponibles());
+        return "turnos/listar"; // ⚠️ Asegúrate de tener esta vista (crearTurno.html)
     }
 
-    // Guardar nuevo turno desde formulario
+    // 👉 Guardar nuevo turno desde el formulario
     @PostMapping("/guardarTurno")
     public String guardarTurno(@RequestParam Long idRuta,
                                @RequestParam String placaUnidad,
@@ -51,52 +51,75 @@ public class TurnoController {
         try {
             Ruta ruta = rutaService.encontrarRutaPorId(idRuta);
             Unidad unidad = unidadService.encontrarPorPlaca(placaUnidad);
+
             if (unidad.getAsientos() == null || unidad.getAsientos().isEmpty()) {
-                unidadService.guardar(unidad); // Esto generará los asientos
+                unidadService.guardar(unidad); // Genera asientos si no existen
             }
 
             turnoService.asignarTurno(ruta, unidad, fecha, hora);
-
             redirectAttributes.addFlashAttribute("success", "Turno asignado correctamente.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al asignar turno: " + e.getMessage());
         }
-
-        return "redirect:/turnos/listar";
+        return "redirect:/turnos/gestionar";
     }
 
-
-
-    // Alternativa si envías datos manuales sin usar el objeto Turno
-    @PostMapping("/asignar")
-    public String asignarTurnoManual(@RequestParam Long idRuta,
-                                     @RequestParam String placaUnidad,
-                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
-                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime hora,
-                                     RedirectAttributes redirectAttributes) {
+    // 👉 Guardar edición de turno existente
+    @PostMapping("/guardar")
+    public String actualizarTurno(@RequestParam Long id,
+                                  @RequestParam Long rutaId,
+                                  @RequestParam String placa,
+                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime hora,
+                                  RedirectAttributes redirectAttrs) {
         try {
-            Ruta ruta = rutaService.encontrarRutaPorId(idRuta);
-            Unidad unidad = unidadService.encontrarPorPlaca(placaUnidad);
-            turnoService.asignarTurno(ruta, unidad, fecha, hora);
-            redirectAttributes.addFlashAttribute("success", "Turno asignado correctamente.");
+            Turno turno = turnoService.encontrarPorId(id);
+            if (turno == null) throw new RuntimeException("Turno no encontrado");
+
+            turno.setFecha(fecha);
+            turno.setHora(hora);
+            turno.setRuta(rutaService.encontrarRutaPorId(rutaId));
+            turno.setUnidad(unidadService.encontrarPorPlaca(placa));
+
+            turnoService.guardar(turno);
+            redirectAttrs.addFlashAttribute("success", "Turno actualizado correctamente.");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error: " + e.getMessage());
+            redirectAttrs.addFlashAttribute("error", "Error al guardar turno: " + e.getMessage());
         }
-        return "redirect:/turnos/listar";
+
+        return "redirect:/turnos/gestionar";
     }
 
-    // Mostrar todos los turnos
-    @GetMapping("/listar")
-    public String listarTurnos(Model model) {
-        model.addAttribute("rutas", rutaService.listarRutas());
-        model.addAttribute("unidadesDisponibles", unidadService.listarUnidadesDisponibles());
-        return "turnos/listar"; // archivo HTML llamado listar.html dentro de /templates/turnos/
+    // 👉 Eliminar turno
+    @PostMapping("/eliminar")
+    public String eliminarTurno(@RequestParam Long id, RedirectAttributes redirectAttrs) {
+        try {
+            Turno turno = turnoService.encontrarPorId(id);
+            if (turno == null) {
+                throw new RuntimeException("Turno no encontrado");
+            }
+
+            Unidad unidad = turno.getUnidad();
+            if (unidad != null) {
+                unidad.setEstado(Unidad.estadoUnidad.Disponible); // Cambia el estado
+                unidadService.guardar(unidad);                    // Persiste el nuevo estado
+            }
+
+            turnoService.eliminar(id); // Elimina el turno
+            redirectAttrs.addFlashAttribute("success", "Turno eliminado correctamente y unidad disponible.");
+        } catch (Exception e) {
+            redirectAttrs.addFlashAttribute("error", "Error al eliminar turno: " + e.getMessage());
+        }
+        return "redirect:/turnos/gestionar";
     }
+
+
+    // 👉 Vista de gestión de turnos (listado)
     @GetMapping("/gestionar")
     public String gestionarTurnos(Model model) {
+        model.addAttribute("turnos", turnoService.listarTurnos());
         model.addAttribute("rutas", rutaService.listarRutas());
-        model.addAttribute("unidadesDisponibles", unidadService.listarUnidadesDisponibles());
-        return "turnos/listar"; // el nombre del archivo Thymeleaf sin extensión
+        model.addAttribute("unidades", unidadService.listarUnidades());
+        return "turnos/GestionTurnos";
     }
-
 }

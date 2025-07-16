@@ -11,19 +11,20 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
+
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {
         var slc = new SessionLocaleResolver();
-        slc.setDefaultLocale(Locale.forLanguageTag("es"));
-        return slc; // ¡Faltaba este retorno!
+        slc.setDefaultLocale(Locale.forLanguageTag("es")); // Idioma por defecto
+        return slc;
     }
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         var lci = new LocaleChangeInterceptor();
-        lci.setParamName("lang");
+        lci.setParamName("lang"); // Escucha el parámetro lang=es o lang=en
         return lci;
     }
 

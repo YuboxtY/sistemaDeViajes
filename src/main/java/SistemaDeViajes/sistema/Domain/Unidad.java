@@ -35,4 +35,13 @@ public class Unidad implements Serializable { // Serializable para permitir la s
         Asignada,
         EnMantenimiento
     }
+
+    public Unidad(String placa) {
+        this.placa = placa;
+    }
+
+    public Unidad()
+    {
+
+    }
 }
