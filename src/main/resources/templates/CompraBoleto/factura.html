@@ -60,7 +60,7 @@
                                        id="montoIngresado"
                                        name="montoIngresado"
                                        step="0.01"
-                                       th:attr="min=${total}"
+                                       th:attr="min=${total}, value=${total}"
                                        placeholder="Ingrese el valor pagado"
                                        required>
                                 <div th:if="${errorPago}" class="alert alert-danger text-center">
