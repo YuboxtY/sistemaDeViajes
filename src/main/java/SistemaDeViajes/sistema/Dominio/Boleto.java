@@ -36,4 +36,6 @@ public class Boleto implements Serializable {
     private Date fechaCompra;
     private String formaPago;
     // Fecha de compra del boleto
+
+
 }
