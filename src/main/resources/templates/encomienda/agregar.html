@@ -8,22 +8,26 @@
 <body class="bg-light">
 
 <div class="container py-5">
+    <!-- ENCABEZADO -->
     <header class="mb-5 text-center">
-        <h2 class="text-primary">Formulario de Encomienda</h2>
+        <h2 class="text-primary fw-bold"><i class="bi bi-box2-heart me-2"></i>Formulario de Encomienda</h2>
+        <p class="text-muted">Completa los campos para registrar una nueva encomienda</p>
     </header>
 
+    <!-- FORMULARIO -->
     <form th:action="@{/encomiendas/guardar}" th:object="${encomienda}" method="post">
         <input type="hidden" th:field="*{idEncomienda}" />
         <div class="mb-4">
-            <label class="form-label">Número de Envío</label>
+            <label class="form-label fw-semibold">Número de Envío</label>
             <input type="text" th:field="*{numeroDeEnvio}" class="form-control" readonly />
         </div>
 
+        <!-- REMITENTE Y DESTINATARIO -->
         <div class="row g-4">
             <!-- Remitente -->
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Remitente</div>
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">Remitente</div>
                     <div class="card-body">
                         <input type="hidden" th:field="*{remitente.idCliente}" />
                         <div class="row g-3">
@@ -57,8 +61,8 @@
 
             <!-- Destinatario -->
             <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">Destinatario</div>
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">Destinatario</div>
                     <div class="card-body">
                         <input type="hidden" th:field="*{destinatario.idCliente}" />
                         <div class="row g-3">
@@ -91,9 +95,9 @@
             </div>
         </div>
 
-        <!-- Información de Envío -->
-        <div class="card my-4">
-            <div class="card-header">Información de Envío</div>
+        <!-- INFORMACIÓN DE ENVÍO -->
+        <div class="card my-4 shadow-sm">
+            <div class="card-header bg-secondary text-white">Información de Envío</div>
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-4">
@@ -119,9 +123,9 @@
             </div>
         </div>
 
-        <!-- Pago -->
-        <div class="card mb-4">
-            <div class="card-header">Pago y Facturación</div>
+        <!-- PAGO Y FACTURACIÓN -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-secondary text-white">Pago y Facturación</div>
             <div class="card-body">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-4">
@@ -144,7 +148,7 @@
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Total</label>
-                        <p class="form-control-plaintext" th:text="${encomienda.total}"></p>
+                        <p class="form-control-plaintext fw-bold" th:text="${encomienda.total}"></p>
                     </div>
                 </div>
                 <div class="form-check mt-3">
@@ -154,15 +158,20 @@
             </div>
         </div>
 
-        <!-- Botones -->
+        <!-- BOTONES -->
         <div class="d-flex justify-content-between mb-5">
-            <a th:href="@{/encomiendas/list}" class="btn btn-outline-secondary">← Cancelar</a>
-            <button type="submit" class="btn btn-primary">Guardar Encomienda</button>
+            <a th:href="@{/encomiendas/list}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Cancelar
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle me-1"></i> Guardar Encomienda
+            </button>
         </div>
     </form>
 
-    <footer class="mt-5 text-center text-muted">
-        <p>© 2025 Sistema de Viajes</p>
+    <!-- FOOTER -->
+    <footer class="mt-5 text-center text-muted small">
+        © 2025 Sistema de Viajes
     </footer>
 </div>
 
@@ -170,39 +179,33 @@
 <script>
     function buscarCliente(tipo) {
         const cedula = document.getElementById(tipo + 'Cedula').value;
-
         if (!cedula) {
             alert("Por favor ingresa una cédula");
             return;
         }
 
         fetch(`/clientes/buscar?cedula=${cedula}`)
-            .then(response => {
-                if (!response.ok) {
-                    limpiarCampos(tipo);
-                    return null;
-                }
-                return response.json();
-            })
+            .then(response => response.ok ? response.json() : null)
             .then(cliente => {
                 if (cliente) {
                     document.getElementById(tipo + 'Nombre').value = cliente.nombre || '';
                     document.getElementById(tipo + 'Apellido').value = cliente.apellido || '';
                     document.getElementById(tipo + 'Telefono').value = cliente.telefono || '';
                     document.getElementById(tipo + 'Correo').value = cliente.correo || '';
+                } else {
+                    limpiarCampos(tipo);
                 }
             })
-            .catch(error => {
-                console.error("Error al buscar cliente:", error);
+            .catch(() => {
                 alert("Error al buscar cliente.");
+                limpiarCampos(tipo);
             });
     }
 
     function limpiarCampos(tipo) {
-        document.getElementById(tipo + 'Nombre').value = '';
-        document.getElementById(tipo + 'Apellido').value = '';
-        document.getElementById(tipo + 'Telefono').value = '';
-        document.getElementById(tipo + 'Correo').value = '';
+        ['Nombre', 'Apellido', 'Telefono', 'Correo'].forEach(campo => {
+            document.getElementById(tipo + campo).value = '';
+        });
     }
 </script>
 </body>

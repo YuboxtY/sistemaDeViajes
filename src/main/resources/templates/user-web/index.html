@@ -50,6 +50,36 @@
         </div>
     </section>
 
+    <!-- Por que elegirnos -->
+    <section class="container my-5">
+        <div class="bg-white rounded-4 shadow-sm p-5 text-center">
+            <h2 class="mb-4 fw-bold">¿Cómo funciona?</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <i class="bi bi-geo-alt-fill fs-1 text-danger mb-2"></i>
+                    <h6 class="fw-semibold">Consulta todas las rutas</h6>
+
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <i class="bi bi-bus-front-fill fs-1 text-danger mb-2"></i>
+                    <h6 class="fw-semibold">Selecciona tus asientos</h6>
+
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <i class="bi bi-credit-card-2-front-fill fs-1 text-danger mb-2"></i>
+                    <h6 class="fw-semibold">Selecciona tu forma de pago</h6>
+
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <i class="bi bi-ticket-perforated-fill fs-1 text-danger mb-2"></i>
+                    <h6 class="fw-semibold">Confirma tu compra</h6>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- NUESTROS SERVICIOS -->
     <section class="container my-5">
         <h2 class="text-center fw-bold mb-5">Nuestros Servicios</h2>
@@ -60,7 +90,8 @@
                     <div class="card-body">
                         <i class="bi bi-bus-front fs-1 text-primary mb-3"></i>
                         <h5 class="card-title fw-semibold">Reservar Viaje</h5>
-                        <p class="card-text text-muted">Compra tu boleto y elige tu asiento de forma sencilla y rápida.</p>
+                        <p class="card-text text-muted">Compra tu boleto y elige tu asiento de forma sencilla y
+                            rápida.</p>
                         <a class="btn btn-primary w-100 rounded-pill fw-semibold"
                            th:href="@{/CompraBoleto/listarTurnos}">Ir a Viajes</a>
                     </div>
@@ -72,7 +103,8 @@
                     <div class="card-body">
                         <i class="bi bi-clock-history fs-1 text-success mb-3"></i>
                         <h5 class="card-title fw-semibold">Historial de Viajes</h5>
-                        <p class="card-text text-muted">Consulta todas tus compras pasadas de boletos de forma ordenada.</p>
+                        <p class="card-text text-muted">Consulta todas tus compras pasadas de boletos de forma
+                            ordenada.</p>
                         <a class="btn btn-success w-100 rounded-pill fw-semibold"
                            th:href="@{/CompraBoleto/misBoletos}">Ver Historial</a>
                     </div>

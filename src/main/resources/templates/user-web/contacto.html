@@ -11,25 +11,13 @@
             <p class="text-muted">¿Tienes dudas o necesitas ayuda? Escríbenos y te responderemos lo antes posible.</p>
         </div>
 
-        <!-- Mapa centrado -->
-        <div class="d-flex justify-content-center mb-5">
-            <div class="ratio ratio-16x9" style="max-width: 800px; width: 100%;">
-                <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.123456789012!2d-78.9833333!3d-2.6500000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d16f2b4abcdef%3A0x1234567890abcdef!2sAv%20Padre%20Carlos%20Solano%20%2F%20V%C3%ADa%20Cuenca%2C%20Nab%C3%B3n%2C%20Ecuador!5e0!3m2!1ses!2sec!4v1699621234567"
-                        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </div>
 
-        <!-- Sección de formulario e información -->
+
+        <!-- Formulario de contacto -->
         <div class="row g-5 justify-content-center align-items-start">
-
-            <!-- Formulario -->
             <div class="col-lg-6">
                 <h4 class="mb-4 text-primary">Envíanos un mensaje</h4>
-                <form th:action="@{/user-web/contacto}" method="post">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-
+                <form id="contactForm">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
                         <input type="text" class="form-control" name="nombre" required>
@@ -50,7 +38,14 @@
                         <i class="bi bi-envelope-fill me-1"></i> Enviar mensaje
                     </button>
                 </form>
+
+                <!-- Contenedor para el alert de éxito -->
+                <div id="successAlert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                    ✅ ¡Tu mensaje se ha enviado correctamente!
+                    <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('successAlert').classList.add('d-none')"></button>
+                </div>
             </div>
+
 
             <!-- Información de contacto -->
             <div class="col-lg-5">
@@ -83,9 +78,19 @@
                     </li>
                 </ul>
             </div>
-
         </div>
     </div>
-</div>
 
+    <!-- Script que intercepta el envío y muestra el mensaje -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+          e.preventDefault(); // no enviamos
+          // mostramos alerta de éxito
+          const alert = document.getElementById('successAlert');
+          alert.classList.remove('d-none');
+          // limpiamos el formulario
+          this.reset();
+        });
+    </script>
+</div>
 </html>

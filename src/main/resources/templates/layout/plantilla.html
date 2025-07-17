@@ -84,15 +84,26 @@
     </nav>
 </header>
 
-<!-- FOOTER -->
-<footer th:fragment="footer" class="bg-light text-center text-muted py-3 mt-auto">
-    <div class="container">
-        <p class="mb-0 small">
-            [[#{plantilla.pie-pagina}]]
-            <a href="https://ucacue.edu.ec" target="_blank" rel="noopener noreferrer">ucacue.edu.ec</a>
-        </p>
+<footer th:fragment="footer" class="bg-light py-3 mt-auto">
+    <div class="container d-flex justify-content-center align-items-center gap-3">
+        <!-- Nombre de la empresa -->
+        <span class="fw-semibold">Empresa de Transporte Quezada-Aguirre</span>
+
+        <!-- Icono de Facebook -->
+        <a href="https://www.facebook.com/profile.php?id=100009523177325"
+           target="_blank" rel="noopener noreferrer">
+            <img
+                    src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
+                    alt="Facebook"
+                    width="30" height="30"
+            >
+        </a>
+
+        <!-- Copyright -->
+        <span class="text-muted small">© 2025 Trans-Nabón</span>
     </div>
 </footer>
+
 
 </body>
 </html>
