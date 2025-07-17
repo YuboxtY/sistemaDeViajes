@@ -11,4 +11,5 @@ public interface BoletoService {
     public void eliminar (Boleto boleto);
     public Boleto encontrarBoleto(Boleto boleto);
     List<Boleto> obtenerBoletosPorUsuarioId(Long idUsuario);
+    Boleto buscarPorId(Long id);
 }

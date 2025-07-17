@@ -225,6 +225,24 @@ public class ControladorBoleto {
         return "CompraBoleto/listarBoletosPorUsuario";
     }
 
+    @GetMapping("/imprimirfactura/{id}")
+    public String imprimirFactura(@PathVariable("id") Long id, Model model) {
+        // Obtener el boleto desde la base de datos
+        Boleto boleto = boletoService.buscarPorId(id);
+
+        if (boleto == null) {
+            // Manejo de error si no existe
+            return "redirect:/CompraBoleto/listarTurnos";
+        }
+
+        // Pasar el boleto al modelo
+        model.addAttribute("boleto", boleto);
+
+        // Retornar la vista que genera la factura
+        return "CompraBoleto/imprimirFactura"; // → src/main/resources/templates/CompraBoleto/facturaBoleto.html
+    }
+
+
 
 
 }

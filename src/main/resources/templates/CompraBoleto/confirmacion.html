@@ -57,6 +57,12 @@
     <div class="text-center mt-5">
         <a th:href="@{/user-web/index}" class="btn btn-outline-primary">Volver al Menú Principal</a>
     </div>
+    <!-- Botón para imprimir factura -->
+    <a th:href="@{'/CompraBoleto/factura/' + ${turno.id}}"
+       class="btn btn-outline-success"
+       target="_blank">
+        Imprimir Factura
+    </a>
 </div>
 
 <footer th:replace="layout/plantilla :: footer"></footer>

@@ -17,6 +17,10 @@ public class BoletoServiceImplemets implements BoletoService{
         return (List<Boleto>) boletoDao.findAll();//encuentre de persona dao(capa de datos) todos los campos
     }
 
+    public Boleto buscarPorId(Long id) {
+        return boletoDao.findById(id).orElse(null);
+    }
+
     @Override
     public void guardar(Boleto boleto) {
         boletoDao.save(boleto);

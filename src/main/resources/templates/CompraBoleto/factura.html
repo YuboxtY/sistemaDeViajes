@@ -38,7 +38,7 @@
                         <hr>
                         <p><strong>Cantidad de Asientos:</strong> <span th:text="${asientos.size()}"></span></p>
                         <p><strong>Subtotal:</strong> $<span th:text="${subtotal}"></span></p>
-                        <p><strong>IVA (15%):</strong> $<span th:text="${iva}"></span></p>
+                        <p><strong>IVA (15%):</strong> $<span th:text="${#numbers.formatDecimal(iva, 1, 2)}"></span></p>
                         <h5><strong>Total:</strong> $<span th:text="${total}"></span></h5>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                    id="montoIngresado"
                                    name="montoIngresado"
                                    step="0.01"
-                                   th:attr="min=${total}"
+                                   th:attr="min=${total}, value=${total}"
                                    placeholder="Ingrese el valor pagado"
                                    required>
                             <div th:if="${errorPago}" class="alert alert-danger text-center">
@@ -93,8 +93,10 @@
                 <!-- Botones -->
                 <div class="text-center mb-4">
                     <button type="submit" class="btn btn-primary me-3">Pagar</button>
-                    <a th:href="@{/CompraBoleto/listarTurnos}" class="btn btn-secondary">Regresar</a>
+                    <a th:href="@{/CompraBoleto/listarTurnos}" class="btn btn-secondary me-2">Regresar</a>
+
                 </div>
+
 
             </div>
         </div>
