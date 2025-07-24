@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta charset="UTF-8"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Trans-Nabón</title>
 
@@ -53,14 +54,21 @@
 
                 <ul class="navbar-nav ms-auto align-items-center">
                     <!-- Cambio de idioma -->
-                    <li class="nav-item me-3">
-                        <div class="d-flex align-items-center gap-2 text-white small">
-                            <span><i class="bi bi-translate"></i></span>
-                            <a class="text-white text-decoration-none" th:href="@{/(lang=es)}">ES</a>
+                    <li class="nav-item d-flex align-items-center ms-3">
+                        <div class="nav-link text-white d-flex gap-2 small">
+                            <i class="bi bi-translate"></i>
+                            <span th:if="${#locale.language == 'es'}" class="fw-bold">ES</span>
+                            <a th:if="${#locale.language != 'es'}"
+                               th:href="@{__${uri}__(lang='es')}"
+                               class="text-white text-decoration-none">ES</a>
                             <span>|</span>
-                            <a class="text-white text-decoration-none" th:href="@{/(lang=en)}">EN</a>
+                            <span th:if="${#locale.language == 'en'}" class="fw-bold">EN</span>
+                            <a th:if="${#locale.language != 'en'}"
+                               th:href="@{__${uri}__(lang='en')}"
+                               class="text-white text-decoration-none">EN</a>
                         </div>
                     </li>
+
 
                     <!-- Usuario autenticado -->
                     <li class="nav-item me-3" sec:authorize="isAuthenticated()">

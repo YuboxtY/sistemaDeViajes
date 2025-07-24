@@ -24,13 +24,29 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto mb-3 mb-lg-0">
+                <li class="nav-item">
+                    <div class="nav-link text-white d-flex align-items-center gap-2 small">
+                        <i class="bi bi-translate"></i>
+                        <span th:if="${#locale.language == 'es'}" class="fw-bold">ES</span>
+                        <a th:if="${#locale.language != 'es'}" class="text-white text-decoration-none" th:href="@{__${#request.requestURI}__(lang=es)}">ES</a>
+
+                        <span>|</span>
+
+                        <span th:if="${#locale.language == 'en'}" class="fw-bold">EN</span>
+                        <a th:if="${#locale.language != 'en'}" class="text-white text-decoration-none" th:href="@{__${#request.requestURI}__(lang=en)}">EN</a>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-white" th:href="@{/user-web/index}">
                         <i class="bi bi-house-door-fill me-1"></i>Inicio
                     </a>
                 </li>
+
+
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="servDropdown" role="button"

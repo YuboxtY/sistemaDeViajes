@@ -3,11 +3,10 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head>
+<head th:replace="layout/plantilla :: head">
     <meta charset="UTF-8">
     <title>Boton Crear Usuario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-
 </head>
 <body>
 <header th:replace="layout/plantilla :: header"></header><!-- Encabezado de la página -->

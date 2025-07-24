@@ -5,8 +5,12 @@ import SistemaDeViajes.sistema.Dominio.Rol;
 import SistemaDeViajes.sistema.Dominio.Usuario;
 import SistemaDeViajes.sistema.Dao.RolDao;
 import SistemaDeViajes.sistema.Dao.services.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -140,6 +144,18 @@ public class ControladorUsuario {
         model.addAttribute("usuarios", usuarios);
         return "Usuario/AdministrarRoles";
     }
+    @ModelAttribute("uri")
+    public String getRequestUri(HttpServletRequest request) {
+        return request.getRequestURI();
+    }
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:messages");
+        source.setDefaultEncoding("UTF-8"); // esto es obligatorio
+        return source;
+    }
+
 }
 
 

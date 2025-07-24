@@ -8,17 +8,17 @@
 
 <div class="container mt-4">
     <div class="text-center mt-4">
-        <a th:href="@{/}" class="btn btn-secondary">← Volver al menu principal </a>
+        <a th:href="@{/}" class="btn btn-secondary">← [[#{accion.volver}]] </a>
     </div>
 
-    <h1 class="mb-4 border-bottom pb-2">Administrar Roles</h1>
+    <h1 class="mb-4 border-bottom pb-2">[[#{titulo.AdministracionRoles}]]</h1>
 
     <!-- Barra de búsqueda -->
     <div class="toolbar mb-3">
         <form th:action="@{/gestionarUsuarios}" method="get" class="d-flex">
             <input type="text" name="termino" placeholder="Buscar por: Cédula o Nombre"
                    class="form-control me-2" th:value="${param.termino}" />
-            <button type="submit" class="btn btn-aceptar">BUSCAR</button>
+            <button type="submit" class="btn btn-aceptar">[[#{accion.buscar}]]</button>
         </form>
     </div>
 
@@ -28,12 +28,12 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Cédula</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Acción</th>
+                <th>[[#{persona.username}]]</th>
+                <th>[[#{persona.nombre}]]</th>
+                <th>[[#{persona.apellido}]]</th>
+                <th>[[#{persona.email}]]</th>
+                <th>[[#{persona.rol}]]</th>
+                <th>[[#{persona.rol}]]</th>
             </tr>
             </thead>
             <tbody>
@@ -50,10 +50,10 @@
                     <form th:action="@{/actualizarRol}" method="post" class="d-flex align-items-center">
                         <input type="hidden" name="usuarioId" th:value="${usuario.idUsuario}" />
                         <select name="rolId" class="form-select me-2">
-                            <option value="1" th:selected="${usuario.rol?.idRol == 1}">Usuario</option>
-                            <option value="2" th:selected="${usuario.rol?.idRol == 2}">Administrador</option>
-                            <option value="3" th:selected="${usuario.rol?.idRol == 3}">Secretaria</option>
-                            <option value="4" th:selected="${usuario.rol?.idRol == 4}">Chofer</option>
+                            <option value="1" th:selected="${usuario.rol?.idRol == 1}">[[#{rol.usuario}]]</option>
+                            <option value="2" th:selected="${usuario.rol?.idRol == 2}">[[#{rol.administrador}]]</option>
+                            <option value="3" th:selected="${usuario.rol?.idRol == 3}">[[#{rol.secretario}]]</option>
+                            <option value="4" th:selected="${usuario.rol?.idRol == 4}">[[#{rol.chofer}]]</option>
                         </select>
                         <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
                     </form>
